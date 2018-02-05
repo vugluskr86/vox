@@ -68,8 +68,6 @@ class feed_object : public object< feed_object_type, feed_object >
          c( *this );
       }
 
-      typedef shared_vector<account_name_type> t_reblogged_by_container;
-
       id_type                    id;
 
       account_name_type                account;
