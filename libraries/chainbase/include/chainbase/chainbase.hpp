@@ -29,6 +29,13 @@
 #include <typeinfo>
 #include <set>
 
+#include <fc/smart_ref_impl.hpp>
+#include <fc/uint128.hpp>
+
+#include <fc/container/deque.hpp>
+
+#include <fc/io/fstream.hpp>
+
 #ifndef CHAINBASE_NUM_RW_LOCKS
    #define CHAINBASE_NUM_RW_LOCKS 10
 #endif
@@ -443,7 +450,17 @@ class dumper2
                auto ok = _indices.modify( found, [&]( value_type& v ) {
                   v = std::move( item.second );
                });
-               if( !ok ) BOOST_THROW_EXCEPTION( std::logic_error( "Could not modify object-UNDO, most likely a uniqueness constraint was violated" ) );
+               if( !ok )
+               {
+                  elog( "strange object:${so} \n", ( "so", item ) );
+
+                  for( auto& item : head.old_values )
+                  {
+                     elog( "${so} $$", ( "so", item.second ) );
+                  }
+
+                  BOOST_THROW_EXCEPTION( std::logic_error( "Could not modify object-UNDO, most likely a uniqueness constraint was violated" ) );
+               }
             }
 
             dumper2::instance()->dump( "undo - end", "0", "0" );
