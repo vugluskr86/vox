@@ -555,19 +555,23 @@ class dumper2
 
             for( const auto& item : state.old_values )
             {
+               dumper2::instance()->dump( "squash", "start", item.second.id.get_id() );
                if( prev_state.new_ids.find( item.second.id ) != prev_state.new_ids.end() )
                {
                   // new+upd -> new, type A
+                  dumper2::instance()->dump( "squash", "A", item.second.id.get_id() );
                   continue;
                }
                if( prev_state.old_values.find( item.second.id ) != prev_state.old_values.end() )
                {
                   // upd(was=X) + upd(was=Y) -> upd(was=X), type A
+                  dumper2::instance()->dump( "squash", "B", item.second.id.get_id() );
                   continue;
                }
                // del+upd -> N/A
                assert( prev_state.removed_values.find(item.second.id) == prev_state.removed_values.end() );
                // nop+upd(was=Y) -> upd(was=Y), type B
+               dumper2::instance()->dump( "squash", "C", item.second.id.get_id() );
                prev_state.old_values.emplace( std::move(item) );
             }
 
@@ -584,10 +588,12 @@ class dumper2
                   prev_state.new_ids.erase(obj.second.id);
                   continue;
                }
+               dumper2::instance()->dump( "squash", "D", obj.second.id.get_id() );
                auto it = prev_state.old_values.find(obj.second.id);
                if( it != prev_state.old_values.end() )
                {
                   // upd(was=X) + del(was=Y) -> del(was=X)
+                  dumper2::instance()->dump( "squash", "E", it->second.id.get_id() );
                   prev_state.removed_values.emplace( std::move(*it) );
                   prev_state.old_values.erase(obj.second.id);
                   continue;
@@ -595,6 +601,7 @@ class dumper2
                // del + del -> N/A
                assert( prev_state.removed_values.find( obj.second.id ) == prev_state.removed_values.end() );
                // nop + del(was=Y) -> del(was=Y)
+               dumper2::instance()->dump( "squash", "F", obj.second.id.get_id() );
                prev_state.removed_values.emplace( std::move(obj) ); //[obj.second->id] = std::move(obj.second);
             }
 
