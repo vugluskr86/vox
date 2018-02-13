@@ -74,15 +74,6 @@ class dumper
             s<<" "<<message<<" "<<data<<" "<<data2<<"\n";
             std::string tmp_str = s.str();
 
-            std::stringstream s2;
-            s2<<data;
-            std::string str_dbg = s2.str();
-            if( str_dbg.size() >= 3 && str_dbg[0] == 'c' && str_dbg[1] == 'h' && str_dbg[2] == 'u' )
-            {
-               char c = data[0];
-               if( c )
-               {}
-            }
             //if( last.find( tmp_str ) == last.end() )
             {
                last.insert( tmp_str );
@@ -106,20 +97,34 @@ class dumper
             s<<" "<<message<<" "<<data<<" "<<data2<<"\n";
             std::string tmp_str = s.str();
 
-            std::stringstream s2;
-            s2<<data;
-            std::string str_dbg = s2.str();
-            if( str_dbg.size() >= 3 && str_dbg[0] == 'c' && str_dbg[1] == 'h' && str_dbg[2] == 'u' )
-            {
-               char c = data[0];
-               if( c )
-               {}
-            }
             //if( last.find( tmp_str ) == last.end() )
             {
                last.insert( tmp_str );
                s.str("");
                s<<counter++<<" "<<message<<" "<<data<<" "<<data2<<" "<<data3<<"\n";
+               tmp_str = s.str();
+               f<<tmp_str;
+               f.flush();
+            }
+         }
+      }
+
+      template< typename T, typename T2, typename T3, typename T4 >
+      void dump( const char* message, const T& data, const T2& data2, const T3& data3, const T4& data4 )
+      {
+         static uint64_t counter = 0;
+
+         if( block >= min_block )
+         {
+            std::stringstream s;
+            s<<" "<<message<<" "<<data<<" "<<data2<<"\n";
+            std::string tmp_str = s.str();
+
+            //if( last.find( tmp_str ) == last.end() )
+            {
+               last.insert( tmp_str );
+               s.str("");
+               s<<counter++<<" "<<message<<" "<<data<<" "<<data2<<" "<<data3<<" "<<data4<<"\n";
                tmp_str = s.str();
                f<<tmp_str;
                f.flush();

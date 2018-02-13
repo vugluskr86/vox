@@ -81,7 +81,7 @@ void performance_impl::modify< performance_data::t_creation_type::full_feed >( c
    dbg_fakse_str += get_actual_name( obj );
 
    dumper::instance()->dump( dbg_fakse_str.c_str(), std::string( obj.account ), next_id );
-   dumper::instance()->dump( dbg_str.c_str(), std::string( obj.account ), get_actual_id( obj ), obj.id.get_id() );
+   dumper::instance()->dump( dbg_str.c_str(), std::string( obj.account ), get_actual_id( obj ), obj.id.get_id(), obj.comment.get_id() );
 
    db.modify( obj, [&]( feed_object& f )
    {
@@ -113,7 +113,7 @@ void performance_impl::modify< performance_data::t_creation_type::part_feed >( c
    dbg_fakse_str += get_actual_name( obj );
    
    dumper::instance()->dump( dbg_fakse_str.c_str(), std::string( obj.account ), next_id );
-   dumper::instance()->dump( dbg_str.c_str(), std::string( obj.account ), get_actual_id( obj ), obj.id.get_id() );
+   dumper::instance()->dump( dbg_str.c_str(), std::string( obj.account ), get_actual_id( obj ), obj.id.get_id(), obj.comment.get_id() );
 
    db.modify( obj, [&]( feed_object& f )
    {
@@ -138,7 +138,7 @@ void performance_impl::modify< performance_data::t_creation_type::full_blog >( c
    dbg_fakse_str += get_actual_name( obj );
 
    dumper::instance()->dump( dbg_fakse_str.c_str(), std::string( obj.account ), next_id );
-   dumper::instance()->dump( dbg_str.c_str(), std::string( obj.account ), get_actual_id( obj ), obj.id.get_id() );
+   dumper::instance()->dump( dbg_str.c_str(), std::string( obj.account ), get_actual_id( obj ), obj.id.get_id(), obj.comment.get_id() );
 
    db.modify( obj, [&]( blog_object& b )
    {
@@ -179,7 +179,7 @@ void performance_impl::remember_last( bool is_delayed, bool& init, Iterator& act
          dbg_fakse_str += get_actual_name( *removed );
          if( !pd.s.allow_modify )
             dumper::instance()->dump( dbg_fakse_str.c_str(), std::string( removed->account ), get_actual_id( *removed ) );
-         dumper::instance()->dump( dbg_str.c_str(), std::string( removed->account ), get_actual_id( *removed ), removed->id.get_id() );
+         dumper::instance()->dump( dbg_str.c_str(), std::string( removed->account ), get_actual_id( *removed ), removed->id.get_id(), removed->comment.get_id() );
          db.remove( *removed );
       }
    }
@@ -192,7 +192,7 @@ void performance_impl::remember_last( bool is_delayed, bool& init, Iterator& act
       dbg_fakse_str += get_actual_name( *actual );
       if( !pd.s.allow_modify )
          dumper::instance()->dump( dbg_fakse_str.c_str(), std::string( actual->account ), get_actual_id( *actual ) );
-      dumper::instance()->dump( dbg_str.c_str(), std::string( actual->account ), get_actual_id( *actual ), actual->id.get_id() );
+      dumper::instance()->dump( dbg_str.c_str(), std::string( actual->account ), get_actual_id( *actual ), actual->id.get_id(), actual->comment.get_id() );
       db.remove( *actual );
    }
 }

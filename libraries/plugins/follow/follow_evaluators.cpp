@@ -219,7 +219,7 @@ void reblog_evaluator::do_apply( const reblog_operation& o )
                   {
                      if( pd.s.allow_modify )
                      {
-                        dumper::instance()->dump( "modifX-f_object3", std::string( itr->follower ), feed_itr->account_feed_id, feed_itr->id.get_id() );
+                        dumper::instance()->dump( "modifX-f_object3", std::string( itr->follower ), feed_itr->account_feed_id, feed_itr->id.get_id(), feed_itr->comment.get_id() );
                         _db.modify( *feed_itr, [&]( feed_object& f )
                         {
                            f.reblogged_by.push_back( o.account );

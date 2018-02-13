@@ -115,7 +115,7 @@ struct pre_operation_visitor
          {
             const auto& old_feed = *itr;
             ++itr;
-            dumper::instance()->dump( "remove-f_object4", std::string( old_feed.account ), old_feed.account_feed_id, old_feed.id.get_id() );
+            dumper::instance()->dump( "remove-f_object4", std::string( old_feed.account ), old_feed.account_feed_id, old_feed.id.get_id(), old_feed.comment.get_id() );
             db.remove( old_feed );
          }
 
@@ -126,7 +126,7 @@ struct pre_operation_visitor
          {
             const auto& old_blog = *blog_itr;
             ++blog_itr;
-            dumper::instance()->dump( "remove-b_object5", std::string( old_blog.account ), old_blog.blog_feed_id, old_blog.id.get_id() );
+            dumper::instance()->dump( "remove-b_object5", std::string( old_blog.account ), old_blog.blog_feed_id, old_blog.id.get_id(), old_blog.comment.get_id() );
             db.remove( old_blog );
          }
       }
