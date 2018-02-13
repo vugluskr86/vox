@@ -29,12 +29,8 @@
 #include <typeinfo>
 #include <set>
 
-#include <fc/smart_ref_impl.hpp>
-#include <fc/uint128.hpp>
-
-#include <fc/container/deque.hpp>
-
-#include <fc/io/fstream.hpp>
+#include <steem/protocol/fixed_string.hpp>
+#include <fc/io/json.hpp>
 
 #ifndef CHAINBASE_NUM_RW_LOCKS
    #define CHAINBASE_NUM_RW_LOCKS 10
@@ -88,7 +84,15 @@ namespace helpers
 
 namespace chainbase {
 
+struct dump_info
+{
+   uint64_t id;
+   dump_info( uint64_t _id )
+   : id( _id )
+   {
 
+   }
+};
 class dumper2
 {
    private:
@@ -452,12 +456,22 @@ class dumper2
                });
                if( !ok )
                {
-                  elog( "strange object:${so} \n", ( "so", item ) );
+                  const fc::path path("error_problem.json");
+                  const fc::path path2("error_problem_old.json");
+                  const fc::path path3("error_problem_actual.json");
+                  std::vector< dump_info > v_old;
+                  std::vector< dump_info > v_actual;
 
-                  for( auto& item : head.old_values )
-                  {
-                     elog( "${so} $$", ( "so", item.second ) );
-                  }
+                  for( auto& x : head.old_values )
+                     v_old.push_back( dump_info( x.second.id.get_id() ) );
+
+                  for( auto& x : _indices )
+                     v_actual.push_back( dump_info( x.id.get_id() ) );
+
+                  fc::json::save_to_file( dump_info( item.second.id.get_id() ), path);
+                  fc::json::save_to_file( v_old, path2 );
+                  fc::json::save_to_file( v_actual, path3 );
+                  //fc::json::save_to_file( head.old_values, path2);
 
                   BOOST_THROW_EXCEPTION( std::logic_error( "Could not modify object-UNDO, most likely a uniqueness constraint was violated" ) );
                }
@@ -1180,3 +1194,6 @@ class dumper2
    using shared_multi_index_container = boost::multi_index_container<Object,Args..., chainbase::allocator<Object> >;
 }  // namepsace chainbase
 
+
+FC_REFLECT( chainbase::dump_info,
+            (id) )
