@@ -82,6 +82,20 @@ namespace helpers
    };
 } /// namespace helpers
 
+ 
+namespace steem
+{
+   namespace plugins
+   {
+      namespace follow
+      {
+         class feed_object;
+         class blog_object;
+      }
+   }
+}
+
+
 namespace chainbase {
 
 template< typename T >
@@ -89,6 +103,15 @@ struct json_dump
 {
    void save( const T& obj, int nr ){}
 };
+
+#ifndef DUPA
+extern template class json_dump<steem::plugins::follow::feed_object>;
+extern template class json_dump<steem::plugins::follow::blog_object>;
+#endif
+
+}
+
+namespace chainbase {
 
 struct dump_info
 {
