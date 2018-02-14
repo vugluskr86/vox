@@ -18,6 +18,71 @@
 
 #include <memory>
 
+
+
+#include <chainbase/chainbase.hpp>
+ namespace chainbase
+ {
+    template<>
+    struct json_dump< steem::plugins::follow::feed_object >
+    {
+      void save( const steem::plugins::follow::feed_object& obj, int nr )
+      {
+         static std::ofstream f0("feed_objects_0.txt");
+         static std::ofstream f1("feed_objects_1.txt");
+         static std::ofstream f2("feed_objects_2.txt");
+
+         if( nr == 0 )
+         {
+            f0<<obj.id.get_id()<<" "<<std::string( obj.account )<<" "<<obj.account_feed_id<<" "<<obj.comment.get_id()<<"\n";
+            f0.flush();
+         }
+
+         if( nr == 1 )
+         {
+            f1<<obj.id.get_id()<<" "<<std::string( obj.account )<<" "<<obj.account_feed_id<<" "<<obj.comment.get_id()<<"\n";
+            f1.flush();
+         }
+
+         if( nr == 2 )
+         {
+            f2<<obj.id.get_id()<<" "<<std::string( obj.account )<<" "<<obj.account_feed_id<<" "<<obj.comment.get_id()<<"\n";
+            f2.flush();
+         }
+      }
+    };
+    //============================================================================
+    template<>
+    struct json_dump< steem::plugins::follow::blog_object >
+    {
+      void save( const steem::plugins::follow::blog_object& obj, int nr )
+      {
+         static std::ofstream f0("blog_objects_0.txt");
+         static std::ofstream f1("blog_objects_1.txt");
+         static std::ofstream f2("blog_objects_2.txt");
+
+         if( nr == 0 )
+         {
+            f0<<obj.id.get_id()<<" "<<std::string( obj.account )<<" "<<obj.blog_feed_id<<" "<<obj.comment.get_id()<<"\n";
+            f0.flush();
+         }
+
+         if( nr == 1 )
+         {
+            f1<<obj.id.get_id()<<" "<<std::string( obj.account )<<" "<<obj.blog_feed_id<<" "<<obj.comment.get_id()<<"\n";
+            f1.flush();
+         }
+
+         if( nr == 2 )
+         {
+            f2<<obj.id.get_id()<<" "<<std::string( obj.account )<<" "<<obj.blog_feed_id<<" "<<obj.comment.get_id()<<"\n";
+            f2.flush();
+         }
+      }
+    };
+ }
+
+
 namespace steem { namespace plugins { namespace follow {
 
 using namespace steem::protocol;

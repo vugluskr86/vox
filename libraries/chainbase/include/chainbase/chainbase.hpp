@@ -84,6 +84,12 @@ namespace helpers
 
 namespace chainbase {
 
+template< typename T >
+struct json_dump
+{
+   void save( const T& obj, int nr ){}
+};
+
 struct dump_info
 {
    uint64_t id;
@@ -97,7 +103,7 @@ class dumper2
 {
    private:
 
-      uint min_block = 19700000;
+      uint min_block = 0;//19700000;
       uint block = 0;
 
       std::set< std::string > last;
@@ -458,20 +464,30 @@ class dumper2
                {
                   const fc::path path("error_problem.json");
                   const fc::path path2("error_problem_old.json");
-                  const fc::path path3("error_problem_actual.json");
+                  const fc::path path3("error_problem_indices.json");
                   std::vector< dump_info > v_old;
                   std::vector< dump_info > v_actual;
 
+                  using my_t =  decltype ( *( ( (MultiIndexType*)nullptr )->begin() ) );
+                  chainbase::json_dump< my_t > jd;
+
+                  jd.save( item.second, 0 );
+
                   for( auto& x : head.old_values )
+                  {
+                     jd.save( x.second, 1 );
                      v_old.push_back( dump_info( x.second.id.get_id() ) );
+                  }
 
                   for( auto& x : _indices )
+                  {
+                     jd.save( x, 2 );
                      v_actual.push_back( dump_info( x.id.get_id() ) );
+                  }
 
                   fc::json::save_to_file( dump_info( item.second.id.get_id() ), path);
                   fc::json::save_to_file( v_old, path2 );
                   fc::json::save_to_file( v_actual, path3 );
-                  //fc::json::save_to_file( head.old_values, path2);
 
                   BOOST_THROW_EXCEPTION( std::logic_error( "Could not modify object-UNDO, most likely a uniqueness constraint was violated" ) );
                }

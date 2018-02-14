@@ -112,10 +112,12 @@ namespace chainbase {
 
    void database::undo()
    {
+      dumper2::instance()->dump( "database::undo - start", "0", "0" );
       for( auto& item : _index_list )
       {
          item->undo();
       }
+      dumper2::instance()->dump( "database::undo - end", "0", "0" );
    }
 
    void database::squash()
