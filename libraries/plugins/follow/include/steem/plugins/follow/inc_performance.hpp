@@ -20,7 +20,7 @@ class dumper
 {
    private:
 
-      uint min_block = 19700000;
+      uint min_block = 19860000;
       uint block = 0;
 
       std::set< string > last;

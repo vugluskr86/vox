@@ -103,7 +103,7 @@ class dumper2
 {
    private:
 
-      uint min_block = 0;//19700000;
+      uint min_block = 19860000;
       uint block = 0;
 
       std::set< std::string > last;
@@ -449,13 +449,13 @@ class dumper2
 
             const auto& head = _stack.back();
 
-            dumper2::instance()->dump( "undo - start", "0", "0" );
+            dumper2::instance()->dump( "undo-start", "0", "0" );
 
             for( auto& item : head.old_values )
             {
                auto found = _indices.find( item.second.id );
 
-               dumper2::instance()->dump( "undo - found", item.second.id.get_id(), ( found == _indices.end() )?"no":"exist" );
+               dumper2::instance()->dump( "undo-found", item.second.id.get_id(), ( found == _indices.end() )?"no":"exist" );
 
                auto ok = _indices.modify( found, [&]( value_type& v ) {
                   v = std::move( item.second );
@@ -493,15 +493,17 @@ class dumper2
                }
             }
 
-            dumper2::instance()->dump( "undo - end", "0", "0" );
+            dumper2::instance()->dump( "undo-end", "0", "0" );
 
             for( const auto& id : head.new_ids )
             {
+               dumper2::instance()->dump( "undo-erase", id.get_id(), "" );
                _indices.erase( _indices.find( id ) );
             }
             _next_id = head.old_next_id;
 
             for( auto& item : head.removed_values ) {
+               dumper2::instance()->dump( "undo-emplace", item.second.id.get_id(), "" );
                bool ok = _indices.emplace( std::move( item.second ) ).second;
                if( !ok ) BOOST_THROW_EXCEPTION( std::logic_error( "Could not restore object, most likely a uniqueness constraint was violated" ) );
             }

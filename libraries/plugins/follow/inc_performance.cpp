@@ -80,7 +80,7 @@ void performance_impl::modify< performance_data::t_creation_type::full_feed >( c
    dbg_str += get_actual_name( obj );
    dbg_fakse_str += get_actual_name( obj );
 
-   dumper::instance()->dump( dbg_fakse_str.c_str(), std::string( obj.account ), next_id );
+   dumper::instance()->dump( dbg_fakse_str.c_str(), std::string( obj.account ), next_id, pd.comment->get_id() );
    dumper::instance()->dump( dbg_str.c_str(), std::string( obj.account ), get_actual_id( obj ), obj.id.get_id(), obj.comment.get_id() );
 
    db.modify( obj, [&]( feed_object& f )
@@ -112,7 +112,7 @@ void performance_impl::modify< performance_data::t_creation_type::part_feed >( c
    dbg_str += get_actual_name( obj );
    dbg_fakse_str += get_actual_name( obj );
    
-   dumper::instance()->dump( dbg_fakse_str.c_str(), std::string( obj.account ), next_id );
+   dumper::instance()->dump( dbg_fakse_str.c_str(), std::string( obj.account ), next_id, pd.comment->get_id() );
    dumper::instance()->dump( dbg_str.c_str(), std::string( obj.account ), get_actual_id( obj ), obj.id.get_id(), obj.comment.get_id() );
 
    db.modify( obj, [&]( feed_object& f )
@@ -137,7 +137,7 @@ void performance_impl::modify< performance_data::t_creation_type::full_blog >( c
    dbg_str += get_actual_name( obj );
    dbg_fakse_str += get_actual_name( obj );
 
-   dumper::instance()->dump( dbg_fakse_str.c_str(), std::string( obj.account ), next_id );
+   dumper::instance()->dump( dbg_fakse_str.c_str(), std::string( obj.account ), next_id, pd.comment->get_id() );
    dumper::instance()->dump( dbg_str.c_str(), std::string( obj.account ), get_actual_id( obj ), obj.id.get_id(), obj.comment.get_id() );
 
    db.modify( obj, [&]( blog_object& b )

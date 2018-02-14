@@ -2556,6 +2556,9 @@ void database::apply_block( const signed_block& next_block, uint32_t skip )
    //fc::time_point begin_time = fc::time_point::now();
 
    auto block_num = next_block.block_num();
+
+   chainbase::dumper2::instance()->check_block( block_num );
+
    if( _checkpoints.size() && _checkpoints.rbegin()->second != block_id_type() )
    {
       auto itr = _checkpoints.find( block_num );
