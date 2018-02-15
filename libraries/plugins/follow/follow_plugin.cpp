@@ -25,10 +25,7 @@
 #include <chainbase/chainbase.hpp>
  namespace chainbase
  {
-    template<>
-    struct json_dump< steem::plugins::follow::feed_object >
-    {
-      void save( const steem::plugins::follow::feed_object& obj, int nr )
+      void json_dump< steem::plugins::follow::feed_object >::save( const steem::plugins::follow::feed_object& obj, int nr )
       {
          static std::ofstream f0("feed_objects_0.txt");
          static std::ofstream f1("feed_objects_1.txt");
@@ -52,12 +49,8 @@
             f2.flush();
          }
       }
-    };
     //============================================================================
-    template<>
-    struct json_dump< steem::plugins::follow::blog_object >
-    {
-      void save( const steem::plugins::follow::blog_object& obj, int nr )
+      void json_dump< steem::plugins::follow::blog_object >::save( const steem::plugins::follow::blog_object& obj, int nr )
       {
          static std::ofstream f0("blog_objects_0.txt");
          static std::ofstream f1("blog_objects_1.txt");
@@ -81,7 +74,6 @@
             f2.flush();
          }
       }
-    };
  }
 
 

@@ -104,10 +104,17 @@ struct json_dump
    void save( const T& obj, int nr ){}
 };
 
-#ifndef DUPA
-extern template class json_dump<steem::plugins::follow::feed_object>;
-extern template class json_dump<steem::plugins::follow::blog_object>;
-#endif
+template<>
+struct json_dump< steem::plugins::follow::feed_object >
+{
+   void save( const steem::plugins::follow::feed_object& obj, int nr );
+};
+
+template<>
+struct json_dump< steem::plugins::follow::blog_object >
+{
+   void save( const steem::plugins::follow::blog_object& obj, int nr );
+};
 
 }
 
