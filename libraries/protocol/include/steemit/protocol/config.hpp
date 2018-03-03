@@ -40,33 +40,35 @@
 #define STEEMIT_OWNER_AUTH_HISTORY_TRACKING_START_BLOCK_NUM 1
 #else // IS LIVE STEEM NETWORK
 
-#define STEEMIT_INIT_PUBLIC_KEY_STR             "STM8GC13uCZbP44HzMLV6zPZGwVQ8Nt4Kji8PapsPiNq1BK153XTX"
+#define STEEMIT_INIT_PUBLIC_KEY_STR             "VOX8Fwkxptkr2xjTSBoQRVmJwGZZKqPync3EsrYCGdMNLjgaM8PCk"
 #define STEEMIT_CHAIN_ID                        (steemit::protocol::chain_id_type())
+
 #define VESTS_SYMBOL  (uint64_t(6) | (uint64_t('V') << 8) | (uint64_t('E') << 16) | (uint64_t('S') << 24) | (uint64_t('T') << 32) | (uint64_t('S') << 40)) ///< VESTS with 6 digits of precision
-#define STEEM_SYMBOL  (uint64_t(3) | (uint64_t('S') << 8) | (uint64_t('T') << 16) | (uint64_t('E') << 24) | (uint64_t('E') << 32) | (uint64_t('M') << 40)) ///< STEEM with 3 digits of precision
-#define SBD_SYMBOL    (uint64_t(3) | (uint64_t('S') << 8) | (uint64_t('B') << 16) | (uint64_t('D') << 24) ) ///< STEEM Backed Dollars with 3 digits of precision
-#define STMD_SYMBOL   (uint64_t(3) | (uint64_t('S') << 8) | (uint64_t('T') << 16) | (uint64_t('M') << 24) | (uint64_t('D') << 32) ) ///< STEEM Dollars with 3 digits of precision
-#define STEEMIT_SYMBOL                          "STEEM"
-#define STEEMIT_ADDRESS_PREFIX                  "STM"
+#define STEEM_SYMBOL  (uint64_t(3) | (uint64_t('V') << 8) | (uint64_t('O') << 16) | (uint64_t('X') << 24) ) ///< STEEM with 3 digits of precision
+#define SBD_SYMBOL    (uint64_t(3) | (uint64_t('V') << 8) | (uint64_t('O') << 16) | (uint64_t('X') << 24) | (uint64_t('D') << 32) ) ///< STEEM Backed Dollars with 3 digits of precision
+#define STMD_SYMBOL   (uint64_t(3) | (uint64_t('V') << 8) | (uint64_t('O') << 16) | (uint64_t('X') << 24) | (uint64_t('D') << 32) | (uint64_t('D') << 40) ) ///< STEEM Dollars with 3 digits of precision
+
+#define STEEMIT_SYMBOL                          "VOX"
+#define STEEMIT_ADDRESS_PREFIX                  "VOX"
 
 #define STEEMIT_GENESIS_TIME                    (fc::time_point_sec(1458835200))
 #define STEEMIT_MINING_TIME                     (fc::time_point_sec(1458838800))
 #define STEEMIT_CASHOUT_WINDOW_SECONDS_PRE_HF12 (60*60*24)    /// 1 day
 #define STEEMIT_CASHOUT_WINDOW_SECONDS_PRE_HF17 (60*60*12)    /// 12 hours
-#define STEEMIT_CASHOUT_WINDOW_SECONDS          (60*60*24*7)  /// 7 days
+#define STEEMIT_CASHOUT_WINDOW_SECONDS          (60*60)  /// 1 hour
 #define STEEMIT_SECOND_CASHOUT_WINDOW           (60*60*24*30) /// 30 days
-#define STEEMIT_MAX_CASHOUT_WINDOW_SECONDS      (60*60*24*14) /// 2 weeks
+#define STEEMIT_MAX_CASHOUT_WINDOW_SECONDS      (60*60) /// 2 weeks
 #define STEEMIT_VOTE_CHANGE_LOCKOUT_PERIOD      (60*60*2)     /// 2 hours
 #define STEEMIT_UPVOTE_LOCKOUT_HF7              (fc::minutes(1))
-#define STEEMIT_UPVOTE_LOCKOUT_HF17             (fc::hours(12))
+#define STEEMIT_UPVOTE_LOCKOUT_HF17             (fc::minutes(1*5))
 
-#define STEEMIT_ORIGINAL_MIN_ACCOUNT_CREATION_FEE  100000
-#define STEEMIT_MIN_ACCOUNT_CREATION_FEE           1
+#define STEEMIT_ORIGINAL_MIN_ACCOUNT_CREATION_FEE  0
+#define STEEMIT_MIN_ACCOUNT_CREATION_FEE           0
 
 #define STEEMIT_OWNER_AUTH_RECOVERY_PERIOD                  fc::days(30)
 #define STEEMIT_ACCOUNT_RECOVERY_REQUEST_EXPIRATION_PERIOD  fc::days(1)
 #define STEEMIT_OWNER_UPDATE_LIMIT                          fc::minutes(60)
-#define STEEMIT_OWNER_AUTH_HISTORY_TRACKING_START_BLOCK_NUM 3186477
+#define STEEMIT_OWNER_AUTH_HISTORY_TRACKING_START_BLOCK_NUM 1
 
 #endif
 
@@ -74,10 +76,10 @@
 #define STEEMIT_BLOCKS_PER_YEAR                 (365*24*60*60/STEEMIT_BLOCK_INTERVAL)
 #define STEEMIT_BLOCKS_PER_DAY                  (24*60*60/STEEMIT_BLOCK_INTERVAL)
 #define STEEMIT_START_VESTING_BLOCK             (STEEMIT_BLOCKS_PER_DAY * 7)
-#define STEEMIT_START_MINER_VOTING_BLOCK        (STEEMIT_BLOCKS_PER_DAY * 30)
+#define STEEMIT_START_MINER_VOTING_BLOCK        (300)
 
 #define STEEMIT_INIT_MINER_NAME                 "initminer"
-#define STEEMIT_NUM_INIT_MINERS                 1
+#define STEEMIT_NUM_INIT_MINERS                 19
 #define STEEMIT_INIT_TIME                       (fc::time_point_sec());
 
 #define STEEMIT_MAX_WITNESSES                   21
@@ -119,8 +121,8 @@
 #define STEEMIT_1_TENTH_PERCENT                 (STEEMIT_100_PERCENT/1000)
 #define STEEMIT_DEFAULT_SBD_INTEREST_RATE       (10*STEEMIT_1_PERCENT) ///< 10% APR
 
-#define STEEMIT_INFLATION_RATE_START_PERCENT    (978) // Fixes block 7,000,000 to 9.5%
-#define STEEMIT_INFLATION_RATE_STOP_PERCENT     (95) // 0.95%
+#define STEEMIT_INFLATION_RATE_START_PERCENT    (978000000) // Fixes block 7,000,000 to 9.5%
+#define STEEMIT_INFLATION_RATE_STOP_PERCENT     (95000000) // 0.95%
 #define STEEMIT_INFLATION_NARROWING_PERIOD      (250000) // Narrow 0.01% every 250k blocks
 #define STEEMIT_CONTENT_REWARD_PERCENT          (75*STEEMIT_1_PERCENT) //75% of inflation, 7.125% inflation
 #define STEEMIT_VESTING_FUND_PERCENT            (15*STEEMIT_1_PERCENT) //15% of inflation, 1.425% inflation
@@ -203,7 +205,7 @@
 #define STEEMIT_PRODUCER_APR_PERCENT             750
 #define STEEMIT_POW_APR_PERCENT                  750
 
-#define STEEMIT_MIN_PAYOUT_SBD                  (asset(20,SBD_SYMBOL))
+#define STEEMIT_MIN_PAYOUT_SBD                  (asset(1000,SBD_SYMBOL))
 
 #define STEEMIT_SBD_STOP_PERCENT                (5*STEEMIT_1_PERCENT ) // Stop printing SBD at 5% Market Cap
 #define STEEMIT_SBD_START_PERCENT               (2*STEEMIT_1_PERCENT) // Start reducing printing of SBD at 2% Market Cap
