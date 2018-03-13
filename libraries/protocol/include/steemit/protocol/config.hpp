@@ -119,13 +119,13 @@
 #define STEEMIT_100_PERCENT                     10000
 #define STEEMIT_1_PERCENT                       (STEEMIT_100_PERCENT/100)
 #define STEEMIT_1_TENTH_PERCENT                 (STEEMIT_100_PERCENT/1000)
-#define STEEMIT_DEFAULT_SBD_INTEREST_RATE       (10*STEEMIT_1_PERCENT) ///< 10% APR
+#define STEEMIT_DEFAULT_SBD_INTEREST_RATE       (STEEMIT_1_PERCENT) ///< 10% APR
 
-#define STEEMIT_INFLATION_RATE_START_PERCENT    (978) // Fixes block 7,000,000 to 9.5%
+#define STEEMIT_INFLATION_RATE_START_PERCENT    (950) // Fixes block 7,000,000 to 9.5%
 #define STEEMIT_INFLATION_RATE_STOP_PERCENT     (95) // 0.95%
 #define STEEMIT_INFLATION_NARROWING_PERIOD      (250000) // Narrow 0.01% every 250k blocks
-#define STEEMIT_CONTENT_REWARD_PERCENT          (75*STEEMIT_1_PERCENT) //75% of inflation, 7.125% inflation
-#define STEEMIT_VESTING_FUND_PERCENT            (15*STEEMIT_1_PERCENT) //15% of inflation, 1.425% inflation
+#define STEEMIT_CONTENT_REWARD_PERCENT          (85*STEEMIT_1_PERCENT) //75% of inflation, 7.125% inflation
+#define STEEMIT_VESTING_FUND_PERCENT            (0) //15% of inflation, 1.425% inflation
 
 #define STEEMIT_MINER_PAY_PERCENT               (STEEMIT_1_PERCENT) // 1%
 #define STEEMIT_MIN_RATION                      100000
@@ -148,7 +148,7 @@
 #define STEEMIT_EQUIHASH_N                      140
 #define STEEMIT_EQUIHASH_K                      6
 
-#define STEEMIT_LIQUIDITY_TIMEOUT_SEC           (fc::seconds(60*60*24*7)) // After one week volume is set to 0
+#define STEEMIT_LIQUIDITY_TIMEOUT_SEC           (fc::seconds(0)) // After one week volume is set to 0
 #define STEEMIT_MIN_LIQUIDITY_REWARD_PERIOD_SEC (fc::seconds(60)) // 1 minute required on books to receive volume
 #define STEEMIT_LIQUIDITY_REWARD_PERIOD_SEC     (60*60)
 #define STEEMIT_LIQUIDITY_REWARD_BLOCKS         (STEEMIT_LIQUIDITY_REWARD_PERIOD_SEC/STEEMIT_BLOCK_INTERVAL)
@@ -217,14 +217,14 @@
 #define STEEMIT_MAX_PERMLINK_LENGTH             256
 #define STEEMIT_MAX_WITNESS_URL_LENGTH          2048
 
-#define STEEMIT_INIT_SUPPLY                     int64_t(0)
+#define STEEMIT_INIT_SUPPLY                     int64_t(10000000000)
 #define STEEMIT_MAX_SHARE_SUPPLY                int64_t(1000000000000000ll)
 #define STEEMIT_MAX_SIG_CHECK_DEPTH             2
 
 #define STEEMIT_MIN_TRANSACTION_SIZE_LIMIT      1024
 #define STEEMIT_SECONDS_PER_YEAR                (uint64_t(60*60*24*365ll))
 
-#define STEEMIT_SBD_INTEREST_COMPOUND_INTERVAL_SEC  (60*60*24*30)
+#define STEEMIT_SBD_INTEREST_COMPOUND_INTERVAL_SEC  (60*60*24)
 #define STEEMIT_MAX_TRANSACTION_SIZE            (1024*64)
 #define STEEMIT_MIN_BLOCK_SIZE_LIMIT            (STEEMIT_MAX_TRANSACTION_SIZE)
 #define STEEMIT_MAX_BLOCK_SIZE                  (STEEMIT_MAX_TRANSACTION_SIZE*STEEMIT_BLOCK_INTERVAL*2000)
