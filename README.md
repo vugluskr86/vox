@@ -251,7 +251,6 @@ This will only build `voxd`.
   developers do not use them. Pull requests fixing warnings / errors from
   these compilers are accepted.
 
-
 # Testing
 
 See [doc/testing.md](doc/testing.md) for test build targets and info
