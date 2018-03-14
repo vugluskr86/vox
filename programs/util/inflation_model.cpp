@@ -79,7 +79,7 @@ int main( int argc, char** argv, char** envp )
 
       reward_delta[VESTING]  = ( new_steem * STEEMIT_VESTING_FUND_PERCENT ) / STEEMIT_100_PERCENT; /// 15% to vesting fund
       
-      reward_delta[PRODUCER] =  new_steem - content_reward - vesting_reward; /// Remaining 10% to witness pay
+      reward_delta[PRODUCER] =  new_steem - reward_delta[CONTENT] - reward_delta[VESTING]; /// Remaining 10% to witness pay
 
 
       current_supply += reward_delta[CONTENT] + reward_delta[VESTING] + reward_delta[PRODUCER];

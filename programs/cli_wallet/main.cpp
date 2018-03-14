@@ -68,7 +68,21 @@ namespace bpo = boost::program_options;
 int main( int argc, char** argv )
 {
    try {
-
+      std::cerr << "\n"
+      "********************************\n"
+      "*                              *\n"
+      "*                              *\n"
+      "*      -    Welcome to   -     *\n"
+      "*                              *\n"
+      "*    Decentralized Autonomous  *\n"
+      "*           Community          *\n"
+      "*   ------------------------   *\n"
+      "*                              *\n"
+      "*             VOX              *\n"
+      "*                              *\n"
+      "********************************\n"
+      "\n";
+      
       boost::program_options::options_description opts;
          opts.add_options()
          ("help,h", "Print this help message and exit.")

@@ -1,15 +1,15 @@
-add_executable( steemd main.cpp )
+add_executable( voxd main.cpp )
 if( UNIX AND NOT APPLE )
   set(rt_library rt )
 endif()
 
 find_package( Gperftools QUIET )
 if( GPERFTOOLS_FOUND )
-    message( STATUS "Found gperftools; compiling steemd with TCMalloc")
+    message( STATUS "Found gperftools; compiling voxd with TCMalloc")
     list( APPEND PLATFORM_SPECIFIC_LIBS tcmalloc )
 endif()
 
-target_link_libraries( steemd PRIVATE
+target_link_libraries( voxd PRIVATE
    steemit_plugins
    steemit_mf_plugins
    steemit_app
@@ -23,7 +23,7 @@ target_link_libraries( steemd PRIVATE
 )
 
 install( TARGETS
-   steemd
+   voxd
 
    RUNTIME DESTINATION bin
    LIBRARY DESTINATION lib
