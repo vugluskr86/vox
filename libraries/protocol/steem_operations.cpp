@@ -159,11 +159,6 @@ namespace steemit { namespace protocol {
       validate_account_name( from );
       validate_account_name( to );
       FC_ASSERT( amount.symbol != VESTS_SYMBOL, "transferring of Steem Power (STMP) is not allowed." );
-      
-      if (amount.symbol == STEEM_SYMBOL){
-         validate_account_for_vox_transfer ( from );
-      }
-      
       FC_ASSERT( amount.amount > 0, "Cannot transfer a negative amount (aka: stealing)" );
       FC_ASSERT( memo.size() < STEEMIT_MAX_MEMO_SIZE, "Memo is too large" );
       FC_ASSERT( fc::is_utf8( memo ), "Memo is not UTF8" );
@@ -413,6 +408,7 @@ namespace steemit { namespace protocol {
       validate_account_name( from );
       validate_account_name( to );
       validate_account_name( agent );
+
       FC_ASSERT( fee.amount >= 0, "fee cannot be negative" );
       FC_ASSERT( sbd_amount.amount >= 0, "sbd amount cannot be negative" );
       FC_ASSERT( steem_amount.amount >= 0, "steem amount cannot be negative" );

@@ -42,15 +42,6 @@ void authority::validate()const
    }
 }
 
-bool is_valid_account_name_for_vox_transfer ( const string& name)
-{
-  if (name.compare(STEEMIT_INIT_MINER_NAME) != 0) 
-  {
-      return false;
-  }
-  return true;
-}
-
 
 bool is_valid_account_name( const string& name )
 {
