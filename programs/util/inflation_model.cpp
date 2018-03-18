@@ -88,13 +88,13 @@ int main( int argc, char** argv, char** envp )
       share_type liquidity_reward = 0;
       
 
-      if( (block_num > liquidity_begin_block) && (block_num < STEEMIT_LIQUIDITY_REWARD_BLOCKS))
-      {
-         liquidity_reward = calc_percent_reward_per_hour< STEEMIT_LIQUIDITY_APR_PERCENT >( current_supply );
-         liquidity_reward = std::max( liquidity_reward, STEEMIT_MIN_LIQUIDITY_REWARD.amount );
-      }
-      reward_delta[ LIQUIDITY] = liquidity_reward;
-      current_supply += reward_delta[ LIQUIDITY];
+      // if( (block_num > liquidity_begin_block) && (block_num < STEEMIT_LIQUIDITY_REWARD_BLOCKS))
+      // {
+      //    liquidity_reward = calc_percent_reward_per_hour< STEEMIT_LIQUIDITY_APR_PERCENT >( current_supply );
+      //    liquidity_reward = std::max( liquidity_reward, STEEMIT_MIN_LIQUIDITY_REWARD.amount );
+      // }
+      // reward_delta[ LIQUIDITY] = liquidity_reward;
+      // current_supply += reward_delta[ LIQUIDITY];
 
 
 

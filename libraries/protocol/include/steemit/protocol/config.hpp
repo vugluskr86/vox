@@ -55,7 +55,7 @@
 #define STEEMIT_MINING_TIME                     (fc::time_point_sec(1458838800))
 #define STEEMIT_CASHOUT_WINDOW_SECONDS_PRE_HF12 (60*60*24)    /// 1 day
 #define STEEMIT_CASHOUT_WINDOW_SECONDS_PRE_HF17 (60*60*12)    /// 12 hours
-#define STEEMIT_CASHOUT_WINDOW_SECONDS          (60*60)  /// 1 hour
+#define STEEMIT_CASHOUT_WINDOW_SECONDS          (60*60*24)  /// 1 day
 #define STEEMIT_SECOND_CASHOUT_WINDOW           (60*60*24*30) /// 30 days
 #define STEEMIT_MAX_CASHOUT_WINDOW_SECONDS      (60*60) /// 2 weeks
 #define STEEMIT_VOTE_CHANGE_LOCKOUT_PERIOD      (60*60*2)     /// 2 hours
@@ -124,8 +124,8 @@
 #define STEEMIT_INFLATION_RATE_START_PERCENT    (950) // Fixes block 7,000,000 to 9.5%
 #define STEEMIT_INFLATION_RATE_STOP_PERCENT     (95) // 0.95%
 #define STEEMIT_INFLATION_NARROWING_PERIOD      (250000) // Narrow 0.01% every 250k blocks
-#define STEEMIT_CONTENT_REWARD_PERCENT          (85*STEEMIT_1_PERCENT) //75% of inflation, 7.125% inflation
-#define STEEMIT_VESTING_FUND_PERCENT            (0) //15% of inflation, 1.425% inflation
+#define STEEMIT_CONTENT_REWARD_PERCENT          (60*STEEMIT_1_PERCENT) //75% of inflation, 7.125% inflation
+#define STEEMIT_VESTING_FUND_PERCENT            (30*STEEMIT_1_PERCENT) //15% of inflation, 1.425% inflation
 
 #define STEEMIT_MINER_PAY_PERCENT               (STEEMIT_1_PERCENT) // 1%
 #define STEEMIT_MIN_RATION                      100000
@@ -217,7 +217,7 @@
 #define STEEMIT_MAX_PERMLINK_LENGTH             256
 #define STEEMIT_MAX_WITNESS_URL_LENGTH          2048
 
-#define STEEMIT_INIT_SUPPLY                     int64_t(10000000000)
+#define STEEMIT_INIT_SUPPLY                     int64_t(100000000000)
 #define STEEMIT_MAX_SHARE_SUPPLY                int64_t(1000000000000000ll)
 #define STEEMIT_MAX_SIG_CHECK_DEPTH             2
 

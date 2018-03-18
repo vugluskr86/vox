@@ -58,12 +58,17 @@ using chain::account_object;
 
 void new_chain_banner( const steemit::chain::database& db )
 {
-   std::cerr << "\n"
+    std::cerr << "\n"
       "********************************\n"
       "*                              *\n"
-      "*   ------- NEW CHAIN ------   *\n"
-      "*   -   Welcome to Steem!  -   *\n"
+      "*                              *\n"
+      "*      -    Welcome to   -     *\n"
+      "*                              *\n"
+      "*    Decentralized Autonomous  *\n"
+      "*           Community          *\n"
       "*   ------------------------   *\n"
+      "*                              *\n"
+      "*             VOX              *\n"
       "*                              *\n"
       "********************************\n"
       "\n";
