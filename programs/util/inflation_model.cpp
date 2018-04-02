@@ -112,7 +112,7 @@ int main( int argc, char** argv, char** envp )
    share_type current_supply = STEEMIT_INIT_SUPPLY;
 
 
-   for( uint32_t b=1; b<20*STEEMIT_BLOCKS_PER_YEAR; b++ )
+   for( uint32_t b=1; b<1*STEEMIT_BLOCKS_PER_YEAR; b++ )
    {
       block_inflation_model( b, current_supply );
       if( b%1000 == 0 )

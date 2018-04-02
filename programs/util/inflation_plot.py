@@ -27,20 +27,31 @@ shapes = iter("ovx+")
 ax = plt.gca()
 
 plt.axis([0,10,5e9,320e9])
-ax.set_xticks(range(11))
-ax.set_yscale("log")
 ax.tick_params(axis="y", which="minor", left="off", right="off")
 ax.tick_params(axis="y2", which="minor", left="off", right="off")
 ax.tick_params(axis="y3", which="minor", left="off", right="off")
 ax.tick_params(axis="y4", which="minor", left="off", right="off")
 ax.tick_params(axis="y5", which="minor", left="off", right="off")
-ax.set_yticks([10e6, 20e6, 40e6, 80e6, 160e6, 320e6, 640e6, 1300e6, 2600e6, 5200e6, 10e9, 20e9, 40e9, 80e9, 160e9, 320e9])
-ax.set_yticklabels(["10M", "20M", "40M", "80M", "160M", "320M", "640M", "1.3B", "2.6B", "5.2B", "10B", "20B", "40B", "80B", "160B", "320B"])
+
+# ax.set_yscale("log")
+# ax.set_xticks(range(11))
+# ax.set_yticks([10e6, 20e6, 40e6, 80e6, 160e6, 320e6, 640e6, 1300e6, 2600e6, 5200e6, 10e9, 20e9, 40e9, 80e9, 160e9, 320e9])
+# ax.set_yticklabels(["10M", "20M", "40M", "80M", "160M", "320M", "640M", "1.3B", "2.6B", "5.2B", "10B", "20B", "40B", "80B", "160B", "320B"])
+# ax.set_ylabel("Supply")
+# ax.set_xlabel("Time")
+# plt.grid(True, which="major", linestyle="-")
+
+plt.axis([0,1,10e6,300e7])
+ax.set_yscale("linear")
+ax.set_xticks(range(2))
+ax.set_yticks([10e6, 20e6, 30e6, 40e6, 50e6, 60e6, 70e6, 80e6, 90e6, 100e6, 110e6, 120e6, 1e6, 100e6, 200e6, 300e7])
+ax.set_yticklabels(["10e6", "20e6", "30e6", "40e6", "50e6", "60e6", "70e6", "80e6", "90e6", "100e6", "110e6", "120e6", "130e6", "140e6", "150e6", "300e7"])
 ax.set_ylabel("Supply")
 ax.set_xlabel("Time")
 plt.grid(True, which="major", linestyle="-")
 
-BLOCKS_PER_YEAR = 20*60*24*365
+
+BLOCKS_PER_YEAR = 20*60*24*30*3
 
 with open(sys.argv[1], "r") as f:
     n = 0

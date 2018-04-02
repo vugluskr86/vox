@@ -2999,7 +2999,10 @@ void database::update_virtual_supply()
          auto percent_sbd = uint16_t( ( ( fc::uint128_t( ( dgp.current_sbd_supply * get_feed_history().current_median_history ).amount.value ) * STEEMIT_100_PERCENT )
             / dgp.virtual_supply.amount.value ).to_uint64() );
 
-         if( percent_sbd <= STEEMIT_SBD_START_PERCENT )
+
+         if (dgp.head_block_number >= STEEMIT_BLOCK_STOP_PRINT_SBD)
+            dgp.sbd_print_rate = 0;
+         else if( percent_sbd <= STEEMIT_SBD_START_PERCENT )
             dgp.sbd_print_rate = STEEMIT_100_PERCENT;
          else if( percent_sbd >= STEEMIT_SBD_STOP_PERCENT )
             dgp.sbd_print_rate = 0;

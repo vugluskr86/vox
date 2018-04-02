@@ -107,7 +107,7 @@
 #define STEEMIT_REVERSE_AUCTION_WINDOW_SECONDS  (60*30) /// 30 minutes
 #define STEEMIT_MIN_VOTE_INTERVAL_SEC           3
 #define STEEMIT_VOTE_DUST_THRESHOLD             (50000000)
-
+#define STEEMIT_BLOCK_STOP_PRINT_SBD 			1500
 #define STEEMIT_MIN_ROOT_COMMENT_INTERVAL       (fc::seconds(60*5)) // 5 minutes
 #define STEEMIT_MIN_REPLY_INTERVAL              (fc::seconds(20)) // 20 seconds
 #define STEEMIT_POST_AVERAGE_WINDOW             (60*60*24u) // 1 day
