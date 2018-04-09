@@ -3,7 +3,7 @@
  */
 #pragma once
 
-#define STEEMIT_BLOCKCHAIN_VERSION              ( version(0, 19, 1) )
+#define STEEMIT_BLOCKCHAIN_VERSION              ( version(0, 19, 5) )
 #define STEEMIT_BLOCKCHAIN_HARDFORK_VERSION     ( hardfork_version( STEEMIT_BLOCKCHAIN_VERSION ) )
 
 #ifdef IS_TEST_NET
@@ -21,7 +21,7 @@
 
 #define STEEMIT_GENESIS_TIME                    (fc::time_point_sec(1451606400))
 #define STEEMIT_MINING_TIME                     (fc::time_point_sec(1451606400))
-#define STEEMIT_CASHOUT_WINDOW_SECONDS          (60*60) /// 1 hr
+#define STEEMIT_CASHOUT_WINDOW_SECONDS          (60*60*24) /// 1 day
 #define STEEMIT_CASHOUT_WINDOW_SECONDS_PRE_HF12 (STEEMIT_CASHOUT_WINDOW_SECONDS)
 #define STEEMIT_CASHOUT_WINDOW_SECONDS_PRE_HF17 (STEEMIT_CASHOUT_WINDOW_SECONDS)
 #define STEEMIT_SECOND_CASHOUT_WINDOW           (60*60*24*3) /// 3 days
@@ -40,22 +40,23 @@
 #define STEEMIT_OWNER_AUTH_HISTORY_TRACKING_START_BLOCK_NUM 1
 #else // IS LIVE STEEM NETWORK
 
-#define STEEMIT_INIT_PUBLIC_KEY_STR             "VOX8Fwkxptkr2xjTSBoQRVmJwGZZKqPync3EsrYCGdMNLjgaM8PCk"
-#define STEEMIT_CHAIN_ID                        (steemit::protocol::chain_id_type())
+#define STEEMIT_INIT_PUBLIC_KEY_STR             "VOX8hTtrju54bpqTrhDWcTmEiLnSZ2Eb2E9xQW3keTtHajnm3May6"
+#define STEEMIT_CHAIN_ID                        (fc::sha256::hash("vox"))
 
 #define VESTS_SYMBOL  (uint64_t(6) | (uint64_t('V') << 8) | (uint64_t('E') << 16) | (uint64_t('S') << 24) | (uint64_t('T') << 32) | (uint64_t('S') << 40)) ///< VESTS with 6 digits of precision
 #define STEEM_SYMBOL  (uint64_t(3) | (uint64_t('V') << 8) | (uint64_t('O') << 16) | (uint64_t('X') << 24) ) ///< STEEM with 3 digits of precision
-#define SBD_SYMBOL    (uint64_t(3) | (uint64_t('V') << 8) | (uint64_t('O') << 16) | (uint64_t('X') << 24) | (uint64_t('D') << 32) ) ///< STEEM Backed Dollars with 3 digits of precision
-#define STMD_SYMBOL   (uint64_t(3) | (uint64_t('V') << 8) | (uint64_t('O') << 16) | (uint64_t('X') << 24) | (uint64_t('D') << 32) | (uint64_t('D') << 40) ) ///< STEEM Dollars with 3 digits of precision
+#define SBD_SYMBOL    (uint64_t(3) | (uint64_t('G') << 8) | (uint64_t('O') << 16) | (uint64_t('L') << 24) | (uint64_t('D') << 32) ) ///< STEEM Backed Dollars with 3 digits of precision
+#define STMD_SYMBOL   (uint64_t(3) | (uint64_t('G') << 8) | (uint64_t('O') << 16) | (uint64_t('L') << 24) | (uint64_t('D') << 32) | (uint64_t('D') << 40) ) ///< STEEM Dollars with 3 digits of precision
 
 #define STEEMIT_SYMBOL                          "VOX"
 #define STEEMIT_ADDRESS_PREFIX                  "VOX"
 
 #define STEEMIT_GENESIS_TIME                    (fc::time_point_sec(1458835200))
 #define STEEMIT_MINING_TIME                     (fc::time_point_sec(1458838800))
+#define STEEMIT_BLOCK_STOP_PRINT_SBD 			 100800
 #define STEEMIT_CASHOUT_WINDOW_SECONDS_PRE_HF12 (60*60*24)    /// 1 day
 #define STEEMIT_CASHOUT_WINDOW_SECONDS_PRE_HF17 (60*60*12)    /// 12 hours
-#define STEEMIT_CASHOUT_WINDOW_SECONDS          (60*60*24)  /// 1 day
+#define STEEMIT_CASHOUT_WINDOW_SECONDS          (60*15)  ///must be 60*60*48 2 days
 #define STEEMIT_SECOND_CASHOUT_WINDOW           (0) /// 30 days
 #define STEEMIT_MAX_CASHOUT_WINDOW_SECONDS      (60*60) /// 2 weeks
 #define STEEMIT_VOTE_CHANGE_LOCKOUT_PERIOD      (60*60*2)     /// 2 hours
@@ -77,9 +78,11 @@
 #define STEEMIT_BLOCKS_PER_DAY                  (24*60*60/STEEMIT_BLOCK_INTERVAL)
 #define STEEMIT_START_VESTING_BLOCK             (1)
 #define STEEMIT_START_MINER_VOTING_BLOCK        (1)
-
+#define STEEMIT_FUND_1							"fund.team"
+#define STEEMIT_FUND_2							"fund.witnesses"
+#define STEEMIT_FUND_3							"fund.common"
 #define STEEMIT_INIT_MINER_NAME                 "initminer"
-#define STEEMIT_NUM_INIT_MINERS                 19
+#define STEEMIT_NUM_INIT_MINERS                 21
 #define STEEMIT_INIT_TIME                       (fc::time_point_sec());
 
 #define STEEMIT_MAX_WITNESSES                   21
@@ -97,21 +100,20 @@
 #define STEEMIT_MAX_MEMO_SIZE                   2048
 #define STEEMIT_MAX_PROXY_RECURSION_DEPTH       4
 #define STEEMIT_VESTING_WITHDRAW_INTERVALS_PRE_HF_16 104
-#define STEEMIT_VESTING_WITHDRAW_INTERVALS      13
-#define STEEMIT_VESTING_WITHDRAW_INTERVAL_SECONDS (60*60*24*7) /// 1 week per interval
+#define STEEMIT_VESTING_WITHDRAW_INTERVALS      1
+#define STEEMIT_VESTING_WITHDRAW_INTERVAL_SECONDS (60*60*24*3) /// 1 week per interval
 #define STEEMIT_MAX_WITHDRAW_ROUTES             10
 #define STEEMIT_SAVINGS_WITHDRAW_TIME        	(fc::days(3))
 #define STEEMIT_SAVINGS_WITHDRAW_REQUEST_LIMIT  100
-#define STEEMIT_VOTE_REGENERATION_SECONDS       (5*60*60*24) // 5 day
+#define STEEMIT_VOTE_REGENERATION_SECONDS       (60*60*24) // 1 day
 #define STEEMIT_MAX_VOTE_CHANGES                5
 #define STEEMIT_REVERSE_AUCTION_WINDOW_SECONDS  (60*30) /// 30 minutes
 #define STEEMIT_MIN_VOTE_INTERVAL_SEC           3
 #define STEEMIT_VOTE_DUST_THRESHOLD             (50000000)
-#define STEEMIT_BLOCK_STOP_PRINT_SBD 			1500
 #define STEEMIT_MIN_ROOT_COMMENT_INTERVAL       (fc::seconds(60*5)) // 5 minutes
 #define STEEMIT_MIN_REPLY_INTERVAL              (fc::seconds(20)) // 20 seconds
 #define STEEMIT_POST_AVERAGE_WINDOW             (60*60*24u) // 1 day
-#define STEEMIT_POST_MAX_BANDWIDTH              (4*STEEMIT_100_PERCENT) // 4 posts per 1 days, average 1 every 12 hours
+#define STEEMIT_POST_MAX_BANDWIDTH              (2*STEEMIT_100_PERCENT) // 4 posts per 1 days, average 1 every 12 hours
 #define STEEMIT_POST_WEIGHT_CONSTANT            (uint64_t(STEEMIT_POST_MAX_BANDWIDTH) * STEEMIT_POST_MAX_BANDWIDTH)
 
 #define STEEMIT_MAX_ACCOUNT_WITNESS_VOTES       7
@@ -119,7 +121,7 @@
 #define STEEMIT_100_PERCENT                     10000
 #define STEEMIT_1_PERCENT                       (STEEMIT_100_PERCENT/100)
 #define STEEMIT_1_TENTH_PERCENT                 (STEEMIT_100_PERCENT/1000)
-#define STEEMIT_DEFAULT_SBD_INTEREST_RATE       (STEEMIT_1_PERCENT) ///< 10% APR
+#define STEEMIT_DEFAULT_SBD_INTEREST_RATE       (0) ///< 10% APR
 
 #define STEEMIT_INFLATION_RATE_START_PERCENT    (950) // Fixes block 7,000,000 to 9.5%
 #define STEEMIT_INFLATION_RATE_STOP_PERCENT     (95) // 0.95%

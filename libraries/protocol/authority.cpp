@@ -42,6 +42,14 @@ void authority::validate()const
    }
 }
 
+bool is_valid_account_name_for_vox_transfer ( const string& name)
+{
+  if ((name.compare(STEEMIT_FUND_1) != 0) || (name.compare(STEEMIT_FUND_2) != 0) || (name.compare(STEEMIT_FUND_3) != 0)) 
+  {
+      return false;
+  }
+  return true;
+}
 
 bool is_valid_account_name( const string& name )
 {

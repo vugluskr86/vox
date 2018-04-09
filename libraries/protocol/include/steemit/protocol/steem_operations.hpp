@@ -19,6 +19,12 @@ namespace steemit { namespace protocol {
       FC_ASSERT( fc::is_utf8( permlink ), "permlink not formatted in UTF8" );
    }
 
+  inline void validate_account_for_vox_transfer (const string& name)
+  {
+      FC_ASSERT( is_valid_account_name_for_vox_transfer ( name ), "transferring of VOX is not allowed.");
+  }
+
+  
    struct account_create_operation : public base_operation
    {
       asset             fee;
