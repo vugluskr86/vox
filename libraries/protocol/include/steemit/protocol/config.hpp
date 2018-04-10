@@ -81,6 +81,7 @@
 #define STEEMIT_FUND_1							"fund.team"
 #define STEEMIT_FUND_2							"fund.witnesses"
 #define STEEMIT_FUND_3							"fund.common"
+#define STEEMIT_AUCTION                         "auction"
 #define STEEMIT_INIT_MINER_NAME                 "initminer"
 #define STEEMIT_NUM_INIT_MINERS                 21
 #define STEEMIT_INIT_TIME                       (fc::time_point_sec());

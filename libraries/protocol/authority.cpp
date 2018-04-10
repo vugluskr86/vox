@@ -44,7 +44,7 @@ void authority::validate()const
 
 bool is_valid_account_name_for_vox_transfer ( const string& name)
 {
-  if ((name.compare(STEEMIT_FUND_1) != 0) && (name.compare(STEEMIT_FUND_2) != 0) && (name.compare(STEEMIT_FUND_3) != 0) && (name.compare(STEEMIT_INIT_MINER_NAME) !=0)) 
+  if ((name.compare(STEEMIT_FUND_1) != 0) && (name.compare(STEEMIT_FUND_2) != 0) && (name.compare(STEEMIT_FUND_3) != 0) && (name.compare(STEEMIT_INIT_MINER_NAME) !=0)&& (name.compare(STEEMIT_AUCTION) !=0)) 
   {
       return false;
   }
