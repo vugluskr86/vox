@@ -56,7 +56,7 @@
 #define STEEMIT_BLOCK_STOP_PRINT_SBD 			 100800
 #define STEEMIT_CASHOUT_WINDOW_SECONDS_PRE_HF12 (60*60*24)    /// 1 day
 #define STEEMIT_CASHOUT_WINDOW_SECONDS_PRE_HF17 (60*60*12)    /// 12 hours
-#define STEEMIT_CASHOUT_WINDOW_SECONDS          (60*15)  ///must be 60*60*48 2 days
+#define STEEMIT_CASHOUT_WINDOW_SECONDS          (60*60*48)  ///must be 60*60*48 2 days
 #define STEEMIT_SECOND_CASHOUT_WINDOW           (0) /// 30 days
 #define STEEMIT_MAX_CASHOUT_WINDOW_SECONDS      (60*60) /// 2 weeks
 #define STEEMIT_VOTE_CHANGE_LOCKOUT_PERIOD      (60*60*2)     /// 2 hours
