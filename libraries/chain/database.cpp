@@ -2970,6 +2970,12 @@ void database::update_global_dynamic_data( const signed_block& b )
       }
 
       dgp.head_block_number = b.block_num();
+      
+      if (STEEMIT_BLOCK_STOP_PRINT_SBD > dgp.head_block_number)
+         dgp.remain_gold_emission_in_blocks= STEEMIT_BLOCK_STOP_PRINT_SBD - dgp.head_block_number;
+      else 
+         dgp.remain_gold_emission_in_blocks = 0;
+
       dgp.head_block_id = b.id();
       dgp.time = b.timestamp;
       dgp.current_aslot += missed_blocks+1;

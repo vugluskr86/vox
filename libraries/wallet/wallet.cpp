@@ -291,6 +291,7 @@ public:
       result["hardfork_version"] = fc::string( _remote_db->get_hardfork_version() );
       result["head_block_num"] = dynamic_props.head_block_number;
       result["head_block_id"] = dynamic_props.head_block_id;
+      result["remain_gold_emission_in_blocks"] = dynamic_props.remain_gold_emission_in_blocks;
       result["head_block_age"] = fc::get_approximate_relative_time_string(dynamic_props.time,
                                                                           time_point_sec(time_point::now()),
                                                                           " old");

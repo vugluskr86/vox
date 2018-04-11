@@ -37,7 +37,7 @@ namespace steemit { namespace chain {
          time_point_sec    time;
          account_name_type current_witness;
 
-
+         uint64_t remain_gold_emission_in_blocks = 0;
          /**
           *  The total POW accumulated, aka the sum of num_pow_witness at the time new POW is added
           */
@@ -132,6 +132,7 @@ FC_REFLECT( steemit::chain::dynamic_global_property_object,
              (head_block_id)
              (time)
              (current_witness)
+             (remain_gold_emission_in_blocks)
              (total_pow)
              (num_pow_witnesses)
              (virtual_supply)
