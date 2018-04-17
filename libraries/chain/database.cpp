@@ -3006,7 +3006,9 @@ void database::update_virtual_supply()
             / dgp.virtual_supply.amount.value ).to_uint64() );
 
 
-         if (dgp.head_block_number >= STEEMIT_BLOCK_STOP_PRINT_SBD)
+         if ((dgp.head_block_number > STEEMIT_BLOCK_STOP_PRINT_SBD_1ST) && (dgp.head_block_number <= STEEMIT_BLOCK_START_PRINT_SBD_1ST))
+            dgp.sbd_print_rate = 0;
+         else if ((dgp.head_block_number > STEEMIT_BLOCK_STOP_PRINT_SBD_2ND) && (dgp.head_block_number <= STEEMIT_BLOCK_START_PRINT_SBD_2ND))
             dgp.sbd_print_rate = 0;
          else if( percent_sbd <= STEEMIT_SBD_START_PERCENT )
             dgp.sbd_print_rate = STEEMIT_100_PERCENT;
