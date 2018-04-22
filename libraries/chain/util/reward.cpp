@@ -35,7 +35,7 @@ uint64_t approx_sqrt( const uint128_t& x )
    return result;
 }
 
-uint64_t get_rshare_reward( const comment_reward_context& ctx )
+uint64_t get_rshare_reward( const comment_reward_context& ctx, const uint128_t head_block_num )
 {
    try
    {
@@ -54,8 +54,14 @@ uint64_t get_rshare_reward( const comment_reward_context& ctx )
    FC_ASSERT( payout_u256 <= u256( uint64_t( std::numeric_limits<int64_t>::max() ) ) );
    uint64_t payout = static_cast< uint64_t >( payout_u256 );
 
-   if( is_comment_payout_dust( ctx.current_steem_price, payout ) )
-      payout = 0;
+   if ( head_block_num < STEEMIT_BLOCK_CHANGE_MIN_PAYOUT ){
+      if( is_comment_payout_dust( ctx.current_steem_price, payout ) )
+         payout = 0;
+   } else {
+
+      if( is_comment_payout_dust_vox( ctx.current_steem_price, payout ) )
+         payout = 0;
+   }
 
    asset max_steem = to_steem( ctx.current_steem_price, ctx.max_sbd );
 

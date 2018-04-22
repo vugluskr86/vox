@@ -31,7 +31,7 @@ struct comment_reward_context
    uint128_t  content_constant = STEEMIT_CONTENT_CONSTANT_HF0;
 };
 
-uint64_t get_rshare_reward( const comment_reward_context& ctx );
+uint64_t get_rshare_reward( const comment_reward_context& ctx, const uint128_t head_block_num );
 
 inline uint128_t get_content_constant_s()
 {
@@ -44,6 +44,13 @@ inline bool is_comment_payout_dust( const price& p, uint64_t steem_payout )
 {
    return to_sbd( p, asset( steem_payout, STEEM_SYMBOL ) ) < STEEMIT_MIN_PAYOUT_SBD;
 }
+
+inline bool is_comment_payout_dust_vox( const price& p, uint64_t steem_payout )
+{
+   return to_sbd( p, asset( steem_payout, STEEM_SYMBOL ) ) < STEEMIT_MIN_PAYOUT_SBD_VOX;
+}
+
+
 
 } } } // steemit::chain::util
 
