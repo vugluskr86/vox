@@ -3,7 +3,7 @@
  */
 #pragma once
 
-#define STEEMIT_BLOCKCHAIN_VERSION              ( version(0, 19, 5) )
+#define STEEMIT_BLOCKCHAIN_VERSION              ( version(0, 19, 6) )
 #define STEEMIT_BLOCKCHAIN_HARDFORK_VERSION     ( hardfork_version( STEEMIT_BLOCKCHAIN_VERSION ) )
 
 #ifdef IS_TEST_NET
@@ -41,7 +41,7 @@
 #else // IS LIVE STEEM NETWORK
 
 #define STEEMIT_INIT_PUBLIC_KEY_STR             "VOX8hTtrju54bpqTrhDWcTmEiLnSZ2Eb2E9xQW3keTtHajnm3May6"
-#define STEEMIT_CHAIN_ID                        (fc::sha256::hash("vox"))
+#define STEEMIT_CHAIN_ID                        (fc::sha256::hash("voxxx"))
 
 #define VESTS_SYMBOL  (uint64_t(6) | (uint64_t('V') << 8) | (uint64_t('E') << 16) | (uint64_t('S') << 24) | (uint64_t('T') << 32) | (uint64_t('S') << 40)) ///< VESTS with 6 digits of precision
 #define STEEM_SYMBOL  (uint64_t(3) | (uint64_t('V') << 8) | (uint64_t('O') << 16) | (uint64_t('X') << 24) ) ///< STEEM with 3 digits of precision
@@ -53,12 +53,7 @@
 
 #define STEEMIT_GENESIS_TIME                    (fc::time_point_sec(1458835200))
 #define STEEMIT_MINING_TIME                     (fc::time_point_sec(1458838800))
-#define STEEMIT_BLOCK_START_PRINT_SBD_1ST			 0
-#define STEEMIT_BLOCK_STOP_PRINT_SBD_1ST 			 108000
-
-#define STEEMIT_BLOCK_START_PRINT_SBD_2ND			 204134
-#define STEEMIT_BLOCK_STOP_PRINT_SBD_2ND			 3085000
-
+#define STEEMIT_BLOCK_STOP_PRINT_SBD_1ST 			 2881000
 
 #define STEEMIT_CASHOUT_WINDOW_SECONDS_PRE_HF12 (60*60*24)    /// 1 day
 #define STEEMIT_CASHOUT_WINDOW_SECONDS_PRE_HF17 (60*60*12)    /// 12 hours
@@ -141,11 +136,12 @@
 #define STEEMIT_MAX_RATION_DECAY_RATE           (1000000)
 #define STEEMIT_FREE_TRANSACTIONS_WITH_NEW_ACCOUNT 100
 
-#define STEEMIT_BANDWIDTH_AVERAGE_WINDOW_SECONDS (60*60*24*7) ///< 1 week
+#define STEEMIT_BANDWIDTH_AVERAGE_WINDOW_SECONDS (60*60*24*1) ///< 1 week
 #define STEEMIT_BANDWIDTH_PRECISION             (uint64_t(1000000)) ///< 1 million
 #define STEEMIT_MAX_COMMENT_DEPTH_PRE_HF17      6
 #define STEEMIT_MAX_COMMENT_DEPTH               0xffff // 64k
 #define STEEMIT_SOFT_MAX_COMMENT_DEPTH          0xff // 255
+#define STEEMIT_VEST_FACTOR						uint64_t(100000000)		
 
 #define STEEMIT_MAX_RESERVE_RATIO               (20000)
 

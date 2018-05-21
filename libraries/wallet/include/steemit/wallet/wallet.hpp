@@ -619,7 +619,6 @@ class wallet_api
        * @param agent The account acting as the agent in case of dispute
        * @param escrow_id A unique id for the escrow transfer. (from, escrow_id) must be a unique pair
        * @param sbd_amount The amount of SBD to transfer
-       * @param steem_amount The amount of STEEM to transfer
        * @param fee The fee paid to the agent
        * @param ratification_deadline The deadline for 'to' and 'agent' to approve the escrow transfer
        * @param escrow_expiration The expiration of the escrow transfer, after which either party can claim the funds
@@ -632,7 +631,6 @@ class wallet_api
          string agent,
          uint32_t escrow_id,
          asset sbd_amount,
-         asset steem_amount,
          asset fee,
          time_point_sec ratification_deadline,
          time_point_sec escrow_expiration,
@@ -691,7 +689,6 @@ class wallet_api
        * @param receiver The account that will receive funds being released
        * @param escrow_id A unique id for the escrow transfer
        * @param sbd_amount The amount of SBD that will be released
-       * @param steem_amount The amount of STEEM that will be released
        * @param broadcast true if you wish to broadcast the transaction
        */
       annotated_signed_transaction escrow_release(
@@ -702,7 +699,6 @@ class wallet_api
          string receiver,
          uint32_t escrow_id,
          asset sbd_amount,
-         asset steem_amount,
          bool broadcast = false
       );
 

@@ -1872,7 +1872,6 @@ annotated_signed_transaction wallet_api::escrow_transfer(
       string agent,
       uint32_t escrow_id,
       asset sbd_amount,
-      asset steem_amount,
       asset fee,
       time_point_sec ratification_deadline,
       time_point_sec escrow_expiration,
@@ -1887,7 +1886,6 @@ annotated_signed_transaction wallet_api::escrow_transfer(
    op.agent = agent;
    op.escrow_id = escrow_id;
    op.sbd_amount = sbd_amount;
-   op.steem_amount = steem_amount;
    op.fee = fee;
    op.ratification_deadline = ratification_deadline;
    op.escrow_expiration = escrow_expiration;
@@ -1957,7 +1955,6 @@ annotated_signed_transaction wallet_api::escrow_release(
    string receiver,
    uint32_t escrow_id,
    asset sbd_amount,
-   asset steem_amount,
    bool broadcast
 )
 {
@@ -1970,8 +1967,7 @@ annotated_signed_transaction wallet_api::escrow_release(
    op.receiver = receiver;
    op.escrow_id = escrow_id;
    op.sbd_amount = sbd_amount;
-   op.steem_amount = steem_amount;
-
+   
    signed_transaction tx;
    tx.operations.push_back( op );
    tx.validate();

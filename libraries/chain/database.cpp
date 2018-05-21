@@ -2971,8 +2971,8 @@ void database::update_global_dynamic_data( const signed_block& b )
 
       dgp.head_block_number = b.block_num();
       
-      if (STEEMIT_BLOCK_STOP_PRINT_SBD_2ND> dgp.head_block_number)
-         dgp.remain_gold_emission_in_blocks= STEEMIT_BLOCK_STOP_PRINT_SBD_2ND - dgp.head_block_number;
+      if (STEEMIT_BLOCK_STOP_PRINT_SBD_1ST > dgp.head_block_number)
+         dgp.remain_gold_emission_in_blocks= STEEMIT_BLOCK_STOP_PRINT_SBD_1ST - dgp.head_block_number;
       else 
          dgp.remain_gold_emission_in_blocks = 0;
 
@@ -3008,10 +3008,6 @@ void database::update_virtual_supply()
 
     
       if (dgp.head_block_number <= STEEMIT_BLOCK_STOP_PRINT_SBD_1ST)
-      {
-         dgp.sbd_print_rate = STEEMIT_100_PERCENT;
-      }
-      else if ((dgp.head_block_number > STEEMIT_BLOCK_START_PRINT_SBD_2ND) && (dgp.head_block_number <= STEEMIT_BLOCK_STOP_PRINT_SBD_2ND))
       {
          dgp.sbd_print_rate = STEEMIT_100_PERCENT;
       }
