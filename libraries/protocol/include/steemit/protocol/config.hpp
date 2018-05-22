@@ -141,7 +141,7 @@
 #define STEEMIT_MAX_COMMENT_DEPTH_PRE_HF17      6
 #define STEEMIT_MAX_COMMENT_DEPTH               0xffff // 64k
 #define STEEMIT_SOFT_MAX_COMMENT_DEPTH          0xff // 255
-#define STEEMIT_VEST_FACTOR						uint64_t(100000000)		
+#define STEEMIT_VEST_FACTOR						uint64_t(10000000)		
 
 #define STEEMIT_MAX_RESERVE_RATIO               (20000)
 
