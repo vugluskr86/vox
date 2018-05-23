@@ -1909,11 +1909,11 @@ state database_api::get_state( string path )const
          path = "trending";
 
       /// FETCH CATEGORY STATE
-      auto trending_tags = get_trending_tags( std::string(), 50 );
-      for( const auto& t : trending_tags )
-      {
-         _state.tag_idx.trending.push_back( string( t.name ) );
-      }
+      //auto trending_tags = get_trending_tags( std::string(), 50 );
+      //for( const auto& t : trending_tags )
+      //{
+      //   _state.tag_idx.trending.push_back( string( t.name ) );
+      //}
       /// END FETCH CATEGORY STATE
 
       set<string> accounts;
