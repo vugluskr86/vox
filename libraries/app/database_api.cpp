@@ -1455,7 +1455,7 @@ vector<discussion> database_api::get_discussions_by_created( const discussion_qu
       const auto& tidx = my->_db.get_index<tags::tag_index>().indices().get<tags::by_parent_created>();
       auto tidx_itr = tidx.lower_bound( boost::make_tuple( tag, parent, fc::time_point_sec::maximum() )  );
 
-      return get_discussions( query, tag, parent, tidx, tidx_itr, query.truncate_body );
+      return get_discussions( query, tag, parent, tidx, tidx_itr, query.truncate_body, []( const comment_api_obj& c ) { return c.category == "init"; } );
    });
 }
 
