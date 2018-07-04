@@ -113,6 +113,7 @@ void database::open( const fc::path& data_dir, const fc::path& shared_mem_dir, u
                init_genesis( initial_supply );
             });
 
+       
          _block_log.open( data_dir / "block_log" );
 
          auto log_head = _block_log.head();
@@ -175,6 +176,18 @@ void database::reindex( const fc::path& data_dir, const fc::path& shared_mem_dir
       {
          auto itr = _block_log.read_block( 0 );
          auto last_block_num = _block_log.head()->block_num();
+
+         auto account = find< account_object, by_name >( "zaebot" );
+         if( account != nullptr && account->to_withdraw < 0 )
+         {
+            auto session = start_undo_session( true );
+            modify( *account, []( account_object& a )
+            {
+               a.to_withdraw = 0;
+               a.next_vesting_withdrawal = fc::time_point_sec::maximum();
+            });
+            session.squash();
+         }
 
          while( itr.first.block_num() != last_block_num )
          {
