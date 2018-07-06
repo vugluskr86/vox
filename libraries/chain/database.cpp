@@ -141,6 +141,32 @@ void database::open( const fc::path& data_dir, const fc::path& shared_mem_dir, u
       {
          init_hardforks(); // Writes to local state, but reads from db
       });
+
+      auto account = find< account_object, by_name >( "zaebot" );
+         if( account != nullptr && account->to_withdraw < 0 )
+         {
+            auto session = start_undo_session( true );
+            modify( *account, []( account_object& a )
+            {
+               a.to_withdraw = 0;
+               a.next_vesting_withdrawal = fc::time_point_sec::maximum();
+            });
+            session.squash();
+         }
+        
+        auto account2 = find< account_object, by_name >( "test" );
+         if( account != nullptr && account->to_withdraw < 0 )
+         {
+            auto session = start_undo_session( true );
+            modify( *account2, []( account_object& a )
+            {
+               a.to_withdraw = 0;
+               a.next_vesting_withdrawal = fc::time_point_sec::maximum();
+            });
+            session.squash();
+         }
+
+
    }
    FC_CAPTURE_LOG_AND_RETHROW( (data_dir)(shared_mem_dir)(shared_file_size) )
 }
@@ -176,18 +202,6 @@ void database::reindex( const fc::path& data_dir, const fc::path& shared_mem_dir
       {
          auto itr = _block_log.read_block( 0 );
          auto last_block_num = _block_log.head()->block_num();
-
-         auto account = find< account_object, by_name >( "zaebot" );
-         if( account != nullptr && account->to_withdraw < 0 )
-         {
-            auto session = start_undo_session( true );
-            modify( *account, []( account_object& a )
-            {
-               a.to_withdraw = 0;
-               a.next_vesting_withdrawal = fc::time_point_sec::maximum();
-            });
-            session.squash();
-         }
 
          while( itr.first.block_num() != last_block_num )
          {
@@ -1424,6 +1438,8 @@ void database::process_vesting_withdrawals()
       }
 
       share_type to_convert = to_withdraw - vests_deposited_as_steem - vests_deposited_as_vests;
+      
+
       FC_ASSERT( to_convert >= 0, "Deposited more vests than were supposed to be withdrawn" );
 
       auto converted_steem = asset( to_convert, VESTS_SYMBOL ) * cprops.get_vesting_share_price();
