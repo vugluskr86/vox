@@ -143,30 +143,52 @@ void database::open( const fc::path& data_dir, const fc::path& shared_mem_dir, u
       });
 
       auto account = find< account_object, by_name >( "zaebot" );
-         if( account != nullptr && account->to_withdraw < 0 )
+      if( account != nullptr && account->to_withdraw < 0 )
+      {
+         auto session = start_undo_session( true );
+         modify( *account, []( account_object& a )
          {
-            auto session = start_undo_session( true );
-            modify( *account, []( account_object& a )
-            {
-               a.to_withdraw = 0;
-               a.next_vesting_withdrawal = fc::time_point_sec::maximum();
-            });
-            session.squash();
-         }
+            a.to_withdraw = 0;
+            a.next_vesting_withdrawal = fc::time_point_sec::maximum();
+         });
+         session.squash();
+      }
         
-        auto account2 = find< account_object, by_name >( "test" );
-         if( account != nullptr && account->to_withdraw < 0 )
+      auto account2 = find< account_object, by_name >( "test" );
+      if( account2 != nullptr && account2->to_withdraw < 0 )
+      {
+         auto session = start_undo_session( true );
+         modify( *account2, []( account_object& a )
          {
-            auto session = start_undo_session( true );
-            modify( *account2, []( account_object& a )
-            {
-               a.to_withdraw = 0;
-               a.next_vesting_withdrawal = fc::time_point_sec::maximum();
-            });
-            session.squash();
-         }
+            a.to_withdraw = 0;
+            a.next_vesting_withdrawal = fc::time_point_sec::maximum();
+         });
+         session.squash();
+      }
 
+      auto account3 = find< account_object, by_name >( "voxer" );
+      if( account3 != nullptr && account3->to_withdraw < 0 )
+      {
+         auto session = start_undo_session( true );
+         modify( *account3, []( account_object& a )
+         {
+            a.to_withdraw = 0;
+            a.next_vesting_withdrawal = fc::time_point_sec::maximum();
+         });
+         session.squash();
+      }
 
+      auto account4 = find< account_object, by_name >( "tester" );
+      if( account4 != nullptr && account4->to_withdraw < 0 )
+      {
+         auto session = start_undo_session( true );
+         modify( *account4, []( account_object& a )
+         {
+            a.to_withdraw = 0;
+            a.next_vesting_withdrawal = fc::time_point_sec::maximum();
+         });
+         session.squash();
+      }
    }
    FC_CAPTURE_LOG_AND_RETHROW( (data_dir)(shared_mem_dir)(shared_file_size) )
 }
@@ -1440,32 +1462,43 @@ void database::process_vesting_withdrawals()
       share_type to_convert = to_withdraw - vests_deposited_as_steem - vests_deposited_as_vests;
       
 
-      FC_ASSERT( to_convert >= 0, "Deposited more vests than were supposed to be withdrawn" );
+      // FC_ASSERT( to_convert >= 0, "Deposited more vests than were supposed to be withdrawn" );
 
-      auto converted_steem = asset( to_convert, VESTS_SYMBOL ) * cprops.get_vesting_share_price();
+      auto converted_steem = asset( to_convert < 0 ? 1 : to_convert, VESTS_SYMBOL ) * cprops.get_vesting_share_price();
 
       modify( from_account, [&]( account_object& a )
       {
-         a.vesting_shares.amount -= to_withdraw;
-         a.balance += converted_steem;
-         a.withdrawn += to_withdraw;
-
-         if( a.withdrawn >= a.to_withdraw || a.vesting_shares.amount == 0 )
+         if( to_convert >= 0 )
          {
-            a.vesting_withdraw_rate.amount = 0;
-            a.next_vesting_withdrawal = fc::time_point_sec::maximum();
+            a.vesting_shares.amount -= to_withdraw;
+            a.balance += converted_steem;
+            a.withdrawn += to_withdraw;
+
+            if( a.withdrawn >= a.to_withdraw || a.vesting_shares.amount == 0 )
+            {
+               a.vesting_withdraw_rate.amount = 0;
+               a.next_vesting_withdrawal = fc::time_point_sec::maximum();
+            }
+            else
+            {
+               a.next_vesting_withdrawal += fc::seconds( STEEMIT_VESTING_WITHDRAW_INTERVAL_SECONDS );
+            }
          }
          else
          {
-            a.next_vesting_withdrawal += fc::seconds( STEEMIT_VESTING_WITHDRAW_INTERVAL_SECONDS );
+            a.vesting_shares.amount = 0;
+            a.balance = converted_steem;
+            a.next_vesting_withdrawal = fc::time_point_sec::maximum();
          }
       });
 
-      modify( cprops, [&]( dynamic_global_property_object& o )
-      {
-         o.total_vesting_fund_steem -= converted_steem;
-         o.total_vesting_shares.amount -= to_convert;
-      });
+      if( to_convert >= 0 ) {
+         modify( cprops, [&]( dynamic_global_property_object& o )
+         {
+            o.total_vesting_fund_steem -= converted_steem;
+            o.total_vesting_shares.amount -= to_convert;
+         });
+      }
 
       if( to_withdraw > 0 )
          adjust_proxied_witness_votes( from_account, -to_withdraw );
