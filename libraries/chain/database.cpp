@@ -113,7 +113,6 @@ void database::open( const fc::path& data_dir, const fc::path& shared_mem_dir, u
                init_genesis( initial_supply );
             });
 
-       
          _block_log.open( data_dir / "block_log" );
 
          auto log_head = _block_log.head();
