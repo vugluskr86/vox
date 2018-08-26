@@ -3662,8 +3662,7 @@ void database::process_hardforks()
       else
       {
          while( hardforks.last_hardfork < STEEMIT_NUM_HARDFORKS
-               && _hardfork_times[ hardforks.last_hardfork + 1 ] <= head_block_time()
-               && hardforks.last_hardfork < STEEMIT_HARDFORK_0_5__54 )
+               && _hardfork_times[ hardforks.last_hardfork + 1 ] <= head_block_time())
          {
             apply_hardfork( hardforks.last_hardfork + 1 );
          }
