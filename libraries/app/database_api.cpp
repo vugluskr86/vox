@@ -1069,11 +1069,11 @@ void database_api::set_pending_payout( discussion& d )const
 {
    if( my->_db.has_index< tags::tag_index >() )
    {
-   const auto& cidx = my->_db.get_index<tags::tag_index>().indices().get<tags::by_comment>();
-   auto itr = cidx.lower_bound( d.id );
-   if( itr != cidx.end() && itr->comment == d.id )  {
-      d.promoted = asset( itr->promoted_balance, SBD_SYMBOL );
-   }
+      const auto& cidx = my->_db.get_index<tags::tag_index>().indices().get<tags::by_comment>();
+      auto itr = cidx.lower_bound( d.id );
+      if( itr != cidx.end() && itr->comment == d.id )  {
+         d.promoted = asset( itr->promoted_balance, SBD_SYMBOL );
+      }
    }
 
    const auto& props = my->_db.get_dynamic_global_properties();

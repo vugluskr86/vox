@@ -60,7 +60,7 @@ using chain::account_object;
 
 void new_chain_banner( const steemit::chain::database& db )
 {
-    std::cerr << "\n"
+   std::cerr << "\n"
       "********************************\n"
       "*                              *\n"
       "*                              *\n"

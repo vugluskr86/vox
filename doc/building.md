@@ -18,7 +18,7 @@ recommended for witnesses and seed-nodes.
 
 Clears old votes from memory that are no longer required for consensus.
 
-### BUILD_STEEM_TESTNET=[OFF/ON]
+### BUILD_VOX_TESTNET=[OFF/ON]
 
 Builds steem for use in a private testnet. Also required for building unit tests.
 

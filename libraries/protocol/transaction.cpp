@@ -211,7 +211,7 @@ set<public_key_type> signed_transaction::get_required_signatures(
       FC_ASSERT( !required_owner.size() );
       FC_ASSERT( !required_active.size() );
       for( auto& posting : required_posting )
-         s.check_authority( posting  );
+         s.check_authority( posting );
 
       s.remove_unused_signatures();
 
