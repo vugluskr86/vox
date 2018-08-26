@@ -113,7 +113,6 @@ void database::open( const fc::path& data_dir, const fc::path& shared_mem_dir, u
                init_genesis( initial_supply );
             });
 
-       
          _block_log.open( data_dir / "block_log" );
 
          auto log_head = _block_log.head();
@@ -770,11 +769,37 @@ signed_block database::_generate_block(
    if( !(skip & skip_witness_signature) )
       FC_ASSERT( witness_obj.signing_key == block_signing_private_key.get_public_key() );
 
-   static const size_t max_block_header_size = fc::raw::pack_size( signed_block_header() ) + 4;
-   auto maximum_block_size = get_dynamic_global_properties().maximum_block_size; //STEEMIT_MAX_BLOCK_SIZE;
-   size_t total_block_size = max_block_header_size;
-
    signed_block pending_block;
+
+   pending_block.previous = head_block_id();
+   pending_block.timestamp = when;
+   pending_block.witness = witness_owner;
+   if( has_hardfork( STEEMIT_HARDFORK_0_5__54 ) )
+   {
+      const auto& witness = get_witness( witness_owner );
+
+      if( witness.running_version != STEEMIT_BLOCKCHAIN_VERSION )
+         pending_block.extensions.insert( block_header_extensions( STEEMIT_BLOCKCHAIN_VERSION ) );
+
+      const auto& hfp = get_hardfork_property_object();
+
+      if( hfp.current_hardfork_version < STEEMIT_BLOCKCHAIN_HARDFORK_VERSION // Binary is newer hardfork than has been applied
+         && ( witness.hardfork_version_vote != _hardfork_versions[ hfp.last_hardfork + 1 ] || witness.hardfork_time_vote != _hardfork_times[ hfp.last_hardfork + 1 ] ) ) // Witness vote does not match binary configuration
+      {
+         // Make vote match binary configuration
+         pending_block.extensions.insert( block_header_extensions( hardfork_version_vote( _hardfork_versions[ hfp.last_hardfork + 1 ], _hardfork_times[ hfp.last_hardfork + 1 ] ) ) );
+      }
+      else if( hfp.current_hardfork_version == STEEMIT_BLOCKCHAIN_HARDFORK_VERSION // Binary does not know of a new hardfork
+         && witness.hardfork_version_vote > STEEMIT_BLOCKCHAIN_HARDFORK_VERSION ) // Voting for hardfork in the future, that we do not know of...
+      {
+         // Make vote match binary configuration. This is vote to not apply the new hardfork.
+         pending_block.extensions.insert( block_header_extensions( hardfork_version_vote( _hardfork_versions[ hfp.last_hardfork ], _hardfork_times[ hfp.last_hardfork ] ) ) );
+      }
+   }
+
+   // The 4 is for the max size of the transaction vector length
+   size_t total_block_size = fc::raw::pack_size( pending_block ) + 4;
+   auto maximum_block_size = get_dynamic_global_properties().maximum_block_size; //STEEM_MAX_BLOCK_SIZE;
 
    with_write_lock( [&]()
    {
@@ -841,32 +866,7 @@ signed_block database::_generate_block(
    // However, the push_block() call below will re-create the
    // _pending_tx_session.
 
-   pending_block.previous = head_block_id();
-   pending_block.timestamp = when;
    pending_block.transaction_merkle_root = pending_block.calculate_merkle_root();
-   pending_block.witness = witness_owner;
-   if( has_hardfork( STEEMIT_HARDFORK_0_5__54 ) )
-   {
-      const auto& witness = get_witness( witness_owner );
-
-      if( witness.running_version != STEEMIT_BLOCKCHAIN_VERSION )
-         pending_block.extensions.insert( block_header_extensions( STEEMIT_BLOCKCHAIN_VERSION ) );
-
-      const auto& hfp = get_hardfork_property_object();
-
-      if( hfp.current_hardfork_version < STEEMIT_BLOCKCHAIN_HARDFORK_VERSION // Binary is newer hardfork than has been applied
-         && ( witness.hardfork_version_vote != _hardfork_versions[ hfp.last_hardfork + 1 ] || witness.hardfork_time_vote != _hardfork_times[ hfp.last_hardfork + 1 ] ) ) // Witness vote does not match binary configuration
-      {
-         // Make vote match binary configuration
-         pending_block.extensions.insert( block_header_extensions( hardfork_version_vote( _hardfork_versions[ hfp.last_hardfork + 1 ], _hardfork_times[ hfp.last_hardfork + 1 ] ) ) );
-      }
-      else if( hfp.current_hardfork_version == STEEMIT_BLOCKCHAIN_HARDFORK_VERSION // Binary does not know of a new hardfork
-         && witness.hardfork_version_vote > STEEMIT_BLOCKCHAIN_HARDFORK_VERSION ) // Voting for hardfork in the future, that we do not know of...
-      {
-         // Make vote match binary configuration. This is vote to not apply the new hardfork.
-         pending_block.extensions.insert( block_header_extensions( hardfork_version_vote( _hardfork_versions[ hfp.last_hardfork ], _hardfork_times[ hfp.last_hardfork ] ) ) );
-      }
-   }
 
    if( !(skip & skip_witness_signature) )
       pending_block.sign( block_signing_private_key );
@@ -934,13 +934,14 @@ void database::notify_post_apply_operation( const operation_notification& note )
 
 inline const void database::push_virtual_operation( const operation& op, bool force )
 {
+/*
    if( !force )
    {
       #if defined( IS_LOW_MEM ) && ! defined( IS_TEST_NET )
       return;
       #endif
    }
-
+*/
    FC_ASSERT( is_virtual_operation( op ) );
    operation_notification note(op);
    notify_pre_apply_operation( note );
@@ -950,6 +951,11 @@ inline const void database::push_virtual_operation( const operation& op, bool fo
 void database::notify_applied_block( const signed_block& block )
 {
    STEEMIT_TRY_NOTIFY( applied_block, block )
+}
+
+void database::notify_pre_apply_block( const signed_block& block )
+{
+   STEEMIT_TRY_NOTIFY( pre_apply_block, block )
 }
 
 void database::notify_on_pending_transaction( const signed_transaction& tx )
@@ -1707,7 +1713,8 @@ void database::process_comment_cashout()
    /// don't allow any content to get paid out until the website is ready to launch
    /// and people have had a week to start posting.  The first cashout will be the biggest because it
    /// will represent 2+ months of rewards.
-
+   if( !has_hardfork( STEEMIT_FIRST_CASHOUT_TIME ) )
+      return;
 
    const auto& gpo = get_dynamic_global_properties();
    util::comment_reward_context ctx;
@@ -1739,7 +1746,7 @@ void database::process_comment_cashout()
       rf_ctx.reward_balance = itr->reward_balance;
 
       // The index is by ID, so the ID should be the current size of the vector (0, 1, 2, etc...)
-      assert( funds.size() == itr->id._id );
+      assert( funds.size() == size_t( itr->id._id ) );
 
       funds.push_back( rf_ctx );
    }
@@ -2642,6 +2649,8 @@ void database::show_free_memory( bool force )
 
 void database::_apply_block( const signed_block& next_block )
 { try {
+   notify_pre_apply_block( next_block );
+
    uint32_t next_block_num = next_block.block_num();
    //block_id_type next_block_id = next_block.id();
 
@@ -2675,6 +2684,13 @@ void database::_apply_block( const signed_block& next_block )
    if( has_hardfork( STEEMIT_HARDFORK_0_12 ) )
    {
       FC_ASSERT( block_size <= gprops.maximum_block_size, "Block Size is too Big", ("next_block_num",next_block_num)("block_size", block_size)("max",gprops.maximum_block_size) );
+   }
+
+   if( block_size < STEEMIT_MIN_BLOCK_SIZE )
+   {
+      elog( "Block size is too small",
+         ("next_block_num",next_block_num)("block_size", block_size)("min",STEEMIT_MIN_BLOCK_SIZE)
+      );
    }
 
    /// modify current witness so transaction evaluators can know who included the transaction,
@@ -2894,7 +2910,7 @@ void database::_apply_transaction(const signed_transaction& trx)
 
       try
       {
-         trx.verify_authority( chain_id, get_active, get_owner, get_posting, STEEMIT_MAX_SIG_CHECK_DEPTH );
+         trx.verify_authority( chain_id, get_active, get_owner, get_posting, STEEMIT_MAX_SIG_CHECK_DEPTH, is_producing() );
       }
       catch( protocol::tx_missing_active_auth& e )
       {
@@ -3501,7 +3517,8 @@ void database::adjust_supply( const asset& delta, bool adjust_vesting )
 {
 
    const auto& props = get_dynamic_global_properties();
-
+   if( props.head_block_number < STEEMIT_BLOCKS_PER_DAY*7 )
+      adjust_vesting = false;
 
    modify( props, [&]( dynamic_global_property_object& props )
    {
@@ -3645,7 +3662,8 @@ void database::process_hardforks()
       else
       {
          while( hardforks.last_hardfork < STEEMIT_NUM_HARDFORKS
-               && _hardfork_times[ hardforks.last_hardfork + 1 ] <= head_block_time())
+               && _hardfork_times[ hardforks.last_hardfork + 1 ] <= head_block_time()
+               && hardforks.last_hardfork < STEEMIT_HARDFORK_0_5__54 )
          {
             apply_hardfork( hardforks.last_hardfork + 1 );
          }

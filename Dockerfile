@@ -2,6 +2,9 @@ FROM phusion/baseimage:0.9.19
 
 #ARG STEEMD_BLOCKCHAIN=https://example.com/steemd-blockchain.tbz2
 
+ARG STEEM_STATIC_BUILD=ON
+ENV STEEM_STATIC_BUILD ${STEEM_STATIC_BUILD}
+
 ENV LANG=en_US.UTF-8
 
 RUN \
@@ -19,6 +22,7 @@ RUN \
         libreadline-dev \
         libssl-dev \
         libtool \
+        liblz4-tool \
         ncurses-dev \
         pbzip2 \
         pkg-config \
@@ -92,8 +96,9 @@ RUN \
         -DCMAKE_BUILD_TYPE=Release \
         -DLOW_MEMORY_NODE=ON \
         -DCLEAR_VOTES=ON \
-        -DSKIP_BY_TX_ID=ON \
+        -DSKIP_BY_TX_ID=OFF \
         -DBUILD_STEEM_TESTNET=OFF \
+        -DSTEEM_STATIC_BUILD=${STEEM_STATIC_BUILD} \
         .. \
     && \
     make -j$(nproc) && \
@@ -116,6 +121,7 @@ RUN \
         -DCLEAR_VOTES=OFF \
         -DSKIP_BY_TX_ID=ON \
         -DBUILD_STEEM_TESTNET=OFF \
+        -DSTEEM_STATIC_BUILD=${STEEM_STATIC_BUILD} \
         .. \
     && \
     make -j$(nproc) && \
@@ -194,6 +200,8 @@ ADD doc/seednodes.txt /etc/steemd/seednodes.txt
 # the following adds lots of logging info to stdout
 ADD contrib/config-for-docker.ini /etc/steemd/config.ini
 ADD contrib/fullnode.config.ini /etc/steemd/fullnode.config.ini
+ADD contrib/config-for-broadcaster.ini /etc/steemd/config-for-broadcaster.ini
+ADD contrib/config-for-ahnode.ini /etc/steemd/config-for-ahnode.ini
 
 # add normal startup script that starts via sv
 ADD contrib/steemd.run /usr/local/bin/steem-sv-run.sh

@@ -5,33 +5,33 @@ add_library( steemit_plugins
 
 target_link_libraries( steemit_plugins
 
-   steemit_raw_block
+   steemit_account_history
+
+   steemit_block_info
 
    steemit_auth_util
+
+   steemit_tags
+
+   steemit_debug_node
+
+   steemit_follow
+
+   steemit_raw_block
+
+   steemit_account_statistics
+
+   steemit_delayed_node
+
+   steemit_market_history
+
+   steemit_private_message
 
    steemit_blockchain_statistics
 
    steemit_witness
 
-   steemit_private_message
-
-   steemit_account_history
-
-   steemit_follow
-
-   steemit_account_statistics
-
-   steemit_debug_node
-
-   steemit_block_info
-
-   steemit_tags
-
-   steemit_delayed_node
-
    steemit_account_by_key
-
-   steemit_market_history
 
 )
 
