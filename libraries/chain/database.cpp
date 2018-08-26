@@ -1713,8 +1713,8 @@ void database::process_comment_cashout()
    /// don't allow any content to get paid out until the website is ready to launch
    /// and people have had a week to start posting.  The first cashout will be the biggest because it
    /// will represent 2+ months of rewards.
-   if( !has_hardfork( STEEMIT_FIRST_CASHOUT_TIME ) )
-      return;
+   // if( !has_hardfork( STEEMIT_FIRST_CASHOUT_TIME ) )
+   //   return;
 
    const auto& gpo = get_dynamic_global_properties();
    util::comment_reward_context ctx;
@@ -3517,8 +3517,8 @@ void database::adjust_supply( const asset& delta, bool adjust_vesting )
 {
 
    const auto& props = get_dynamic_global_properties();
-   if( props.head_block_number < STEEMIT_BLOCKS_PER_DAY*7 )
-      adjust_vesting = false;
+   // if( props.head_block_number < STEEMIT_BLOCKS_PER_DAY*7 )
+   //    adjust_vesting = false;
 
    modify( props, [&]( dynamic_global_property_object& props )
    {
