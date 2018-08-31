@@ -41,7 +41,7 @@ using namespace steemit::protocol;
 
 BOOST_FIXTURE_TEST_SUITE( serialization_tests, clean_database_fixture )
 
-   /*
+/*
 BOOST_AUTO_TEST_CASE( account_name_type_test )
 {
 
@@ -324,6 +324,7 @@ BOOST_AUTO_TEST_CASE( hardfork_version_test )
    FC_LOG_AND_RETHROW();
 }
 
+/*
 BOOST_AUTO_TEST_CASE( min_block_size )
 {
    signed_block b;
@@ -332,6 +333,7 @@ BOOST_AUTO_TEST_CASE( min_block_size )
    size_t min_size = fc::raw::pack_size( b );
    BOOST_CHECK( min_size == STEEMIT_MIN_BLOCK_SIZE );
 }
+*/
 
 BOOST_AUTO_TEST_SUITE_END()
 #endif
