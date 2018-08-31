@@ -80,19 +80,19 @@
 // GENERATE SETTINGS
 
 // PRINTABLE BLOCK
-#define STEEMIT_BLOCK_STOP_PRINT_SBD_1ST                         2881000
+#define STEEMIT_BLOCK_STOP_PRINT_SBD_1ST        2881000
 
 #define STEEMIT_BLOCK_INTERVAL                  3
 #define STEEMIT_BLOCKS_PER_YEAR                 (365*24*60*60/STEEMIT_BLOCK_INTERVAL)
 #define STEEMIT_BLOCKS_PER_DAY                  (24*60*60/STEEMIT_BLOCK_INTERVAL)
 #define STEEMIT_START_VESTING_BLOCK             (1)
 #define STEEMIT_START_MINER_VOTING_BLOCK        (1)
-#define STEEMIT_FUND_1							"fund.team"
-#define STEEMIT_FUND_2							"fund.witnesses"
-#define STEEMIT_FUND_3							"fund.common"
+#define STEEMIT_FUND_1							      "fund.team"
+#define STEEMIT_FUND_2							      "fund.witnesses"
+#define STEEMIT_FUND_3							      "fund.common"
 #define STEEMIT_AUCTION                         "auction"
 #define STEEMIT_INIT_MINER_NAME                 "initminer"
-#define STEEMIT_NUM_INIT_MINERS                 21
+#define STEEMIT_NUM_INIT_MINERS                 1
 #define STEEMIT_INIT_TIME                       (fc::time_point_sec());
 
 #define STEEMIT_MAX_WITNESSES                   21
