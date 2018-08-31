@@ -159,6 +159,7 @@ namespace steemit { namespace protocol {
       validate_account_name( from );
       validate_account_name( to );
       FC_ASSERT( amount.symbol != VESTS_SYMBOL, "transferring of Steem Power (STMP) is not allowed." );
+
       if (amount.symbol == STEEM_SYMBOL){
          validate_account_for_vox_transfer ( from );
       }
@@ -172,7 +173,8 @@ namespace steemit { namespace protocol {
    {
       validate_account_name( from );
       FC_ASSERT( is_asset_type( amount, STEEM_SYMBOL ), "Amount must be STEEM" );
-      FC_ASSERT( to == "", "Can transfer only to yourself " );
+      // TODO: Fix for cli_wallet
+      // FC_ASSERT( to == "", "Can transfer only to yourself " );
       if ( to != account_name_type() ) validate_account_name( to );
       FC_ASSERT( amount > asset( 0, STEEM_SYMBOL ), "Must transfer a nonzero amount" );
    }
