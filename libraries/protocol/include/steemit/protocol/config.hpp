@@ -41,7 +41,7 @@
 #define STEEMIT_HARDFORK_REQUIRED_WITNESSES     1 // 17 of the 21 dpos witnesses (20 elected and 1 virtual time) required for hardfork. This guarantees 75% participation on all subsequent rounds.
 
 #define STEEMIT_VESTING_WITHDRAW_INTERVAL_SECONDS (60) /// 1 week per interval
-
+#define STEEMIT_MIN_ROOT_COMMENT_INTERVAL       (fc::seconds(60)) // 5 minutes
 
 #else // IS LIVE STEEM NETWORK
 
@@ -79,6 +79,7 @@
 #define STEEMIT_HARDFORK_REQUIRED_WITNESSES     17 // 17 of the 21 dpos witnesses (20 elected and 1 virtual time) required for hardfork. This guarantees 75% participation on all subsequent rounds.
 
 #define STEEMIT_VESTING_WITHDRAW_INTERVAL_SECONDS (60*60*24*3) /// 1 week per interval
+#define STEEMIT_MIN_ROOT_COMMENT_INTERVAL       (fc::seconds(60*5)) // 5 minutes
 
 #endif // END LIVE NETROWK
 
@@ -126,7 +127,7 @@
 #define STEEMIT_MIN_VOTE_INTERVAL_SEC           3
 #define STEEMIT_VOTE_DUST_THRESHOLD             (50000000)
 
-#define STEEMIT_MIN_ROOT_COMMENT_INTERVAL       (fc::seconds(60*5)) // 5 minutes
+
 #define STEEMIT_MIN_REPLY_INTERVAL              (fc::seconds(20)) // 20 seconds
 #define STEEMIT_POST_AVERAGE_WINDOW             (60*60*24u) // 1 day
 #define STEEMIT_POST_MAX_BANDWIDTH              (2*STEEMIT_100_PERCENT) // 4 posts per 1 days, average 1 every 12 hours
