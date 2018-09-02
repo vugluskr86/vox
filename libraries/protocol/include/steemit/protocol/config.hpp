@@ -21,12 +21,12 @@
 
 #define STEEMIT_GENESIS_TIME                    (fc::time_point_sec(1451606400))
 #define STEEMIT_MINING_TIME                     (fc::time_point_sec(1451606400))
-#define STEEMIT_CASHOUT_WINDOW_SECONDS          (60*60*24) /// 1 day
+#define STEEMIT_CASHOUT_WINDOW_SECONDS          (60*1) /// 1 day
 #define STEEMIT_CASHOUT_WINDOW_SECONDS_PRE_HF12 (STEEMIT_CASHOUT_WINDOW_SECONDS)
 #define STEEMIT_CASHOUT_WINDOW_SECONDS_PRE_HF17 (STEEMIT_CASHOUT_WINDOW_SECONDS)
-#define STEEMIT_SECOND_CASHOUT_WINDOW           (60*60*24*3) /// 3 days
-#define STEEMIT_MAX_CASHOUT_WINDOW_SECONDS      (60*60*24) /// 1 day
-#define STEEMIT_VOTE_CHANGE_LOCKOUT_PERIOD      (60*10) /// 10 minutes
+#define STEEMIT_SECOND_CASHOUT_WINDOW           (60*1) /// 3 days
+#define STEEMIT_MAX_CASHOUT_WINDOW_SECONDS      (60*1) /// 1 day
+#define STEEMIT_VOTE_CHANGE_LOCKOUT_PERIOD      (60*1) /// 10 minutes
 #define STEEMIT_UPVOTE_LOCKOUT_HF7              (fc::minutes(1))
 #define STEEMIT_UPVOTE_LOCKOUT_HF17             (fc::minutes(5))
 
@@ -39,6 +39,10 @@
 #define STEEMIT_OWNER_UPDATE_LIMIT                          fc::seconds(0)
 #define STEEMIT_OWNER_AUTH_HISTORY_TRACKING_START_BLOCK_NUM 1
 #define STEEMIT_HARDFORK_REQUIRED_WITNESSES     1 // 17 of the 21 dpos witnesses (20 elected and 1 virtual time) required for hardfork. This guarantees 75% participation on all subsequent rounds.
+
+#define STEEMIT_VESTING_WITHDRAW_INTERVAL_SECONDS (60) /// 1 week per interval
+
+
 #else // IS LIVE STEEM NETWORK
 
 #define STEEMIT_INIT_PUBLIC_KEY_STR             "VOX8hTtrju54bpqTrhDWcTmEiLnSZ2Eb2E9xQW3keTtHajnm3May6"
@@ -73,6 +77,8 @@
 #define STEEMIT_OWNER_UPDATE_LIMIT                          fc::minutes(60)
 #define STEEMIT_OWNER_AUTH_HISTORY_TRACKING_START_BLOCK_NUM 1
 #define STEEMIT_HARDFORK_REQUIRED_WITNESSES     17 // 17 of the 21 dpos witnesses (20 elected and 1 virtual time) required for hardfork. This guarantees 75% participation on all subsequent rounds.
+
+#define STEEMIT_VESTING_WITHDRAW_INTERVAL_SECONDS (60*60*24*3) /// 1 week per interval
 
 #endif // END LIVE NETROWK
 
@@ -110,7 +116,7 @@
 #define STEEMIT_MAX_PROXY_RECURSION_DEPTH       4
 #define STEEMIT_VESTING_WITHDRAW_INTERVALS_PRE_HF_16 104
 #define STEEMIT_VESTING_WITHDRAW_INTERVALS      1
-#define STEEMIT_VESTING_WITHDRAW_INTERVAL_SECONDS (60*60*24*3) /// 1 week per interval
+
 #define STEEMIT_MAX_WITHDRAW_ROUTES             10
 #define STEEMIT_SAVINGS_WITHDRAW_TIME        	(fc::days(3))
 #define STEEMIT_SAVINGS_WITHDRAW_REQUEST_LIMIT  100
