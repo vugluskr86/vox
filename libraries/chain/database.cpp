@@ -1615,7 +1615,14 @@ share_type database::cashout_comment_helper( util::comment_reward_context& ctx, 
 
             author_tokens -= total_beneficiary;
 
-            auto sbd_steem     = ( author_tokens * comment.percent_steem_dollars ) / ( STEEMIT_100_PERCENT ) ;
+            auto sbd_steem = ( author_tokens * comment.percent_steem_dollars );
+
+            if( head_block_num() > VOX_BLOCK_FIX_19_11 ) {
+               sbd_steem  = sbd_steem / ( 2 * STEEMIT_100_PERCENT ) ;
+            } else {
+               sbd_steem  = sbd_steem / ( STEEMIT_100_PERCENT ) ;
+            }
+            
             auto vesting_steem = author_tokens - sbd_steem;
 
             const auto& author = get_account( comment.author );
